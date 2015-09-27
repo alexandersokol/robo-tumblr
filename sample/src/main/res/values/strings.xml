@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">RoboTumblr Sample</string>
+    <string name="not_logged_in">Not logged in</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log Out</string>
+
+    <string name="close">Close</string>
+    <string name="wait">Please Wait</string>
+    <string name="consumer_not_defined">Consumer API and secret keys are not defined!</string>
+    <string name="blog_methods">Blog methods</string>
+    <string name="post_methods">Post methods</string>
+    <string name="user_methods">User methods</string>
+    <string name="tagged_methods">Tagged method</string>
+
+    <string name="blog_info">Info</string>
+    <string name="blog_avatar">Avatar</string>
+    <string name="blog_likes">Likes</string>
+    <string name="blog_followers">Followers</string>
+
+    <string name="blog_posts">Posts</string>
+    <string name="blog_post_by_id">Post By Id</string>
+    <string name="blog_queue">Queue</string>
+    <string name="blog_drafts">Drafts</string>
+
+    <string name="post_text">Text</string>
+    <string name="post_photo">Photo</string>
+    <string name="post_quote">Quote</string>
+    <string name="post_chat">Chat</string>
+
+    <string name="post_audio">Audio</string>
+    <string name="post_video">Video</string>
+    <string name="post_link">Link</string>
+    <string name="post_edit">Edit</string>
+
+    <string name="post_reblog">Reblog</string>
+    <string name="post_delete">Delete</string>
+
+    <string name="user_info">Info</string>
+    <string name="user_dashboard">Dashboard</string>
+    <string name="user_likes">Likes</string>
+    <string name="user_followings">Followings</string>
+
+    <string name="user_follow">Follow</string>
+    <string name="user_unfollow">Unfollow</string>
+    <string name="user_like">Like</string>
+    <string name="user_unlike">Unlike</string>
+
+    <string name="tagged">Tagged</string>
+
+    <string name="source_link">Links</string>
+    <string name="source_files">Files</string>
+
+    <string name="run">Run</string>
+    <string name="tumblr_host_name">.tumblr.com</string>
+    <string name="hostname">Hostname: </string>
+    <string name="username">Username: </string>
+    <string name="limit">Limit: </string>
+    <string name="offset">Offset: </string>
+    <string name="before_id">Before Id: </string>
+    <string name="state">State: </string>
+    <string name="title">Title: </string>
+    <string name="body">Body: </string>
+    <string name="description">Description: </string>
+    <string name="url">Url: </string>
+    <string name="source">Source: </string>
+    <string name="quote">Quote: </string>
+    <string name="conversation">Conversation: </string>
+    <string name="tags">Tags: </string>
+    <string name="caption">Caption: </string>
+    <string name="link">Link: </string>
+    <string name="video">Video: </string>
+    <string name="audio">Audio: </string>
+
+    <string-array name="protocol_array">
+        <item>API Key</item>
+        <item>OAuth 1.0a</item>
+    </string-array>
+
+    <string name="developers_hostname">developers.tumblr.com</string>
+
+    <string name="default_link">https://www.google.com</string>
+    <string name="default_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec finibus quam. Proin libero mauris, consequat in ultricies bibendum, suscipit a risus. Fusce sed dui a eros tristique placerat et ac libero. Fusce molestie blandit urna, convallis lobortis ligula tincidunt eu. Integer scelerisque ligula neque, a eleifend leo sagittis eget. Fusce ac arcu enim. Vivamus molestie, sem sed lacinia accumsan, leo ligula tincidunt tortor, vel pulvinar nunc nisl vel ante. Nunc mi enim, commodo non dignissim non, lacinia id est.</string>
+    <string name="default_image_link">https://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png</string>
+    <string name="default_video_link">https://www.youtube.com/watch?v=skVhHlAixyY</string>
+    <string name="default_audio_link">https://open.spotify.com/track/7zlF2G7QFPdj9lmmGNVuNq</string>
+
+    <string name="reblog_info">Reblog Info?</string>
+    <string name="notes_info">Notes Info?</string>
+    <string name="user_has_no_blogs">Current User Has no Blogs, try to relogin</string>
+    <string name="tag">Tag:</string>
+
+    <string name="hint_blog_hostname">hostname</string>
+    <string name="hint_blog_username">username</string>
+    <string name="hint_limit">limit 1–20 (default 20)</string>
+    <string name="hint_offset_timestamp">Offset or after/before timestamp</string>
+    <string name="hint_offset">Offset</string>
+    <string name="hint_tag">Tag</string>
+    <string name="hint_required">Required</string>
+    <string name="hint_tags">Comma-separated tags</string>
+    <string name="hint_photo_link">The "click-through URL" for the photo</string>
+
+
+    <string name="title_blog_info">Blog Info</string>
+    <string name="title_blog_avatar">Blog Avatar</string>
+    <string name="title_blog_likes">Blog Likes</string>
+    <string name="title_blog_followers">Blog Followers</string>
+    <string name="title_blog_posts">Blog Posts</string>
+    <string name="title_blog_post_by_id">Blog Post By Id</string>
+    <string name="title_blog_queue">Blog Queue</string>
+    <string name="title_blog_drafts">Blog Drafts</string>
+
+    <string name="title_post_text">Post Text</string>
+    <string name="title_post_photo">Post Photo</string>
+    <string name="title_post_quote">Post Quote</string>
+    <string name="title_post_chat">Post Chat</string>
+    <string name="title_post_audio">Post Audio</string>
+    <string name="title_post_video">Post Video</string>
+    <string name="title_post_link">Post Link</string>
+    <string name="title_post_edit">Post Edit</string>
+    <string name="title_post_reblog">Post Reblog</string>
+    <string name="title_post_delete">Post Delete</string>
+
+    <string name="title_user_info">User Info</string>
+    <string name="title_user_dashboard">User Dashboard</string>
+    <string name="title_user_likes">User Likes</string>
+    <string name="title_user_followings">User Followings</string>
+    <string name="title_user_follow">User Follow</string>
+    <string name="title_user_unfollow">User Unfollow</string>
+    <string name="title_user_like">User Like</string>
+    <string name="title_user_unlike">User Unlike</string>
+
+    <string name="title_tagged">Tagged</string>
+</resources>

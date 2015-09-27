@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="link_blog_info">https://www.tumblr.com/docs/en/api/v2#blog-info</string>
+    <string name="link_blog_avatar">https://www.tumblr.com/docs/en/api/v2#blog-avatar</string>
+    <string name="link_blog_likes">https://www.tumblr.com/docs/en/api/v2#blog-likes</string>
+    <string name="link_blog_followers">https://www.tumblr.com/docs/en/api/v2#blog-followers</string>
+    <string name="link_blog_posts">https://www.tumblr.com/docs/en/api/v2#posts</string>
+    <string name="link_blog_queue">https://www.tumblr.com/docs/en/api/v2#blog-queue</string>
+    <string name="link_blog_drafts">https://www.tumblr.com/docs/en/api/v2#blog-drafts</string>
+    <string name="link_posting">https://www.tumblr.com/docs/en/api/v2#posting</string>
+</resources>

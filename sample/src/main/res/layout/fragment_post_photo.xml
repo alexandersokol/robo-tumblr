@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/caption_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@+id/caption_tv"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/caption_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/caption_et"
+        android:layout_alignTop="@+id/caption_et"
+        android:gravity="center_vertical"
+        android:text="@string/caption" />
+
+    <EditText
+        android:id="@+id/link_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/caption_et"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@id/link_tv"
+        android:hint="@string/hint_photo_link"
+        android:inputType="textUri"
+        android:singleLine="true" />
+
+    <ImageView
+        android:id="@+id/default_link_btn"
+        android:src="@drawable/ic_content_paste_white_24dp"
+        android:layout_alignTop="@+id/link_et"
+        android:layout_alignBottom="@+id/link_et"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/link_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/link_et"
+        android:layout_alignTop="@+id/link_et"
+        android:gravity="center_vertical"
+        android:text="@string/link" />
+
+    <RadioGroup
+        android:id="@+id/source_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size"
+        android:layout_below="@id/link_et"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/link_cb"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:checked="true"
+            android:text="@string/source_link" />
+
+        <RadioButton
+            android:id="@+id/file_cb"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/source_files" />
+
+    </RadioGroup>
+
+
+    <ImageView
+        android:id="@+id/add_btn"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_alignTop="@id/source_radio_group"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_toStartOf="@+id/remove_btn"
+        android:src="@drawable/ic_add_circle_outline_white_24dp" />
+
+    <ImageView
+        android:id="@+id/remove_btn"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/source_radio_group"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_remove_circle_outline_white_24dp" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/remove_btn"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:descendantFocusability="beforeDescendants" />
+
+</RelativeLayout>
+

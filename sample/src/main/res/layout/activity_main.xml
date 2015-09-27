@@ -1,0 +1,405 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_color"
+        android:minHeight="?attr/actionBarSize">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/user_login_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_logged_in"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/singup_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/login"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+        </FrameLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/MethodTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blog_methods" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@android:color/holo_blue_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_blog_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_info" />
+
+                <Button
+                    android:id="@+id/btn_blog_avatar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_avatar" />
+
+                <Button
+                    android:id="@+id/btn_blog_likes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_likes" />
+
+                <Button
+                    android:id="@+id/btn_blog_followers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_followers" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_blog_posts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_posts" />
+
+                <Button
+                    android:id="@+id/btn_blog_post_by_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_post_by_id" />
+
+                <Button
+                    android:id="@+id/btn_blog_queued"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_queue" />
+
+                <Button
+                    android:id="@+id/btn_blog_drafts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/blog_drafts" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/MethodTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/post_methods" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@android:color/holo_blue_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_post_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_text" />
+
+                <Button
+                    android:id="@+id/btn_post_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_photo" />
+
+                <Button
+                    android:id="@+id/btn_post_quote"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_quote" />
+
+                <Button
+                    android:id="@+id/btn_post_chat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_chat" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_post_audio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_audio" />
+
+                <Button
+                    android:id="@+id/btn_post_video"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_video" />
+
+                <Button
+                    android:id="@+id/btn_post_link"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_link" />
+
+                <Button
+                    android:id="@+id/btn_post_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_edit" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_post_reblog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_reblog" />
+
+                <Button
+                    android:id="@+id/btn_post_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/post_delete" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/MethodTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_methods" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@android:color/holo_blue_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_user_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_info" />
+
+                <Button
+                    android:id="@+id/btn_user_dashboard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_dashboard" />
+
+                <Button
+                    android:id="@+id/btn_user_likes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_likes" />
+
+                <Button
+                    android:id="@+id/btn_user_followings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_followings" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_user_follow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_follow" />
+
+                <Button
+                    android:id="@+id/btn_user_unfollow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_unfollow" />
+
+                <Button
+                    android:id="@+id/btn_user_like"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_like" />
+
+                <Button
+                    android:id="@+id/btn_user_unlike"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/user_unlike" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/MethodTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tagged_methods" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@android:color/holo_blue_light" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_tagged"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/tagged" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

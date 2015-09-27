@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clickable="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/toolbar_color">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_chevron_left_white_24dp" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:text="@string/blog_info"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/link_btn"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_link_white_24dp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="?android:actionBarSize" />
+
+    <ImageView
+        android:id="@+id/btn_run"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_play_arrow_white_24dp"
+        android:background="@drawable/run_btn_selector"
+        />
+
+</FrameLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/hostname_spinner"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_toEndOf="@+id/tumblr_hostname" />
+
+        <TextView
+            android:id="@+id/tumblr_hostname"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hostname_spinner"
+            android:layout_alignTop="@+id/hostname_spinner"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/hostname" />
+
+        <TextView
+            android:id="@+id/limit_tv"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/limit_et"
+            android:layout_alignTop="@+id/limit_et"
+            android:gravity="center_vertical"
+            android:text="@string/limit" />
+
+        <EditText
+            android:id="@+id/limit_et"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hostname_spinner"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@+id/limit_tv"
+            android:gravity="center_horizontal"
+            android:hint="@string/hint_limit"
+            android:inputType="numberSigned" />
+
+        <TextView
+            android:id="@+id/spinner_type"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/offset_et"
+            android:layout_alignTop="@+id/offset_et"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical"
+            android:text="@string/offset" />
+
+        <EditText
+            android:id="@+id/offset_et"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/limit_et"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@+id/spinner_type"
+            android:gravity="center_horizontal"
+            android:hint="@string/hint_offset"
+            android:inputType="numberSigned" />
+
+        <Spinner
+            android:id="@+id/spinner_filter_type"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/offset_et"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/ContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="creator_type_error">Wrong post type</string>
+    <string name="creator_text_body_error">Text body is empty</string>
+    <string name="creator_photo_source_error">Source link or Files should be added</string>
+    <string name="creator_quote_source_error">Quote text should be added</string>
+    <string name="creator_link_url_empty">Url is empty</string>
+    <string name="creator_link_url_error">Bad Url</string>
+    <string name="creator_chat_conversation_error">Conversation is empty</string>
+    <string name="creator_audio_external_error">External Url is bad</string>
+    <string name="creator_audio_data_size_error">File size larger then 10MB</string>
+    <string name="creator_audio_data_exists_error">Audio file does not exist</string>
+    <string name="creator_audio_error">Audio file and External Url are empty</string>
+
+    <string name="creator_video_external_error">Bad Video Url</string>
+    <string name="creator_video_data_size_error">File size larger then 100MB</string>
+    <string name="creator_video_data_exists_error">Video file does not exist</string>
+    <string name="creator_video_error">Video file and External Url are empty</string>
+    <string name="creator_reblog_id_error">Wrong reblog id</string>
+    <string name="creator_reblog_key_error">Wrong reblog key</string>
+</resources>

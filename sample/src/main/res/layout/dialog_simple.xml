@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.robotumblr.sample.dialog.DummyView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#b4000000"
+        />
+
+    <TextView
+        android:id="@+id/wait_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/wait"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        android:text="@android:string/cancel" />
+
+    <Button
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/close" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/wait_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin" />
+
+
+</RelativeLayout>

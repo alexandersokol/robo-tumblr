@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/caption_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@+id/caption_tv" />
+
+    <TextView
+        android:id="@+id/caption_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/caption_et"
+        android:layout_alignTop="@id/caption_et"
+        android:gravity="center_vertical"
+        android:text="@string/caption" />
+
+    <RadioGroup
+        android:id="@+id/source_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size"
+        android:layout_below="@id/caption_tv"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/link_cb"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:checked="true"
+            android:text="@string/source_link" />
+
+        <RadioButton
+            android:id="@+id/file_cb"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/source_files" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/source_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/source_radio_group"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@+id/source_tv" />
+
+    <TextView
+        android:id="@+id/source_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/source_et"
+        android:layout_alignTop="@id/source_et"
+        android:gravity="center_vertical"
+        android:text="@string/audio" />
+
+    <ImageView
+        android:id="@+id/default_link_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/source_et"
+        android:layout_alignEnd="@+id/source_et"
+        android:layout_alignTop="@+id/source_et"
+        android:src="@drawable/ic_content_paste_white_24dp" />
+
+</RelativeLayout>

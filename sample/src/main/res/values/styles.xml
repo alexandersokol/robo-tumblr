@@ -1,0 +1,43 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:dialogTheme">@style/FullscreenDialogTheme</item>
+    </style>
+
+    <style name="FullscreenDialogTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/FullScreenDialogAnimationStyle</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:dialogTheme">@style/FullscreenDialogTheme</item>
+    </style>
+
+    <style name="FullScreenDialogAnimationStyle">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="MethodTextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:textColor">@android:color/holo_green_light</item>
+    </style>
+
+
+    <style name="ContentText">
+        <item name="android:textColor">@color/content_text</item>
+        <item name="android:textIsSelectable">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SimpleText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

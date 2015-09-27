@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <Spinner
+            android:id="@+id/hostname_spinner"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_toEndOf="@+id/tumblr_hostname" />
+
+        <TextView
+            android:id="@+id/tumblr_hostname"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hostname_spinner"
+            android:layout_alignTop="@+id/hostname_spinner"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/hostname" />
+
+        <Spinner
+            android:id="@+id/state_spinner"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hostname_spinner"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_toEndOf="@+id/state_tv" />
+
+        <TextView
+            android:id="@+id/state_tv"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/state_spinner"
+            android:layout_alignTop="@+id/state_spinner"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/state" />
+
+        <EditText
+            android:id="@+id/tags_et"
+            style="@style/SimpleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/state_spinner"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@+id/tags_tv"
+            android:hint="@string/hint_tags" />
+
+        <TextView
+            android:id="@+id/tags_tv"
+            style="@style/SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tags_et"
+            android:layout_alignTop="@id/tags_et"
+            android:gravity="center_vertical"
+            android:text="@string/tags" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
