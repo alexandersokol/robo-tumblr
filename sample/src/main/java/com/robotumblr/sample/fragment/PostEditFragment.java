@@ -3,6 +3,7 @@ package com.robotumblr.sample.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -168,11 +169,15 @@ public class PostEditFragment extends BaseFragment implements BlogPostsReceiver.
 
     @Override
     public void onBlogPostsFail(String error) {
-
+        hideDialog();
+        if (TextUtils.isEmpty(error))
+            error = "Failed";
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBlogPostsSuccess(Blog blog, List<Post> posts, int limit, int offset, String tag, String type, boolean reblogInfo, boolean notesInfo, String filter, int total) {
+        hideDialog();
         mPosts.clear();
         mPosts.addAll(posts);
 

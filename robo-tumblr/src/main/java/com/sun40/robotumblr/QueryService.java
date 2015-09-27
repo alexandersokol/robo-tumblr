@@ -1103,7 +1103,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         boolean notesInfo = intent.getBooleanExtra(KEY_NOTES_INFO, false);
         String filter = intent.getStringExtra(KEY_FILTER);
 
-        if(TextUtils.isEmpty(filter))
+        if (TextUtils.isEmpty(filter))
             filter = TumblrExtras.Filter.TEXT;
 
         if (TextUtils.isEmpty(hostname)) {
@@ -1948,6 +1948,24 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         intent.putExtra(KEY_HOSTNAME, checkHostname(hostname));
         intent.putExtra(KEY_CREATOR, creator);
         return intent;
+    }
+
+
+    /**
+     * Request to reblog post in current blog
+     *
+     * @param context        package context
+     * @param resultReceiver receiver to get response data
+     * @param hostname       user blog hostname like temp.tumblr.com
+     * @param post           post for reblogging
+     * @param comment        comment on reblogged post
+     * @return Intent to start {@link QueryService}
+     */
+    public static Intent reblogPost(@NonNull Context context, BlogReblogReceiver resultReceiver, @NonNull String hostname, Post post, @Nullable String comment) {
+        //noinspection ResourceType
+        ReblogPostCreator creator = new ReblogPostCreator(post.getType(), post.getId(), post.getReblogKey());
+        creator.setComment(comment);
+        return reblogPost(context, resultReceiver, hostname, creator);
     }
 
 

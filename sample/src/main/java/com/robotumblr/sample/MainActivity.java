@@ -27,6 +27,7 @@ import com.robotumblr.sample.fragment.BlogLikesFragment;
 import com.robotumblr.sample.fragment.BlogPostByIdFragment;
 import com.robotumblr.sample.fragment.BlogPostsFragment;
 import com.robotumblr.sample.fragment.BlogQueueFragment;
+import com.robotumblr.sample.fragment.PostReblogFragment;
 import com.robotumblr.sample.fragment.PostAudioFragment;
 import com.robotumblr.sample.fragment.PostChatFragment;
 import com.robotumblr.sample.fragment.PostEditFragment;
@@ -310,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_post_reblog:
-
+                fragment = new PostReblogFragment();
                 break;
 
             case R.id.btn_post_delete:

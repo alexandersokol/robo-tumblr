@@ -9,4 +9,6 @@
     <string name="link_blog_drafts">https://www.tumblr.com/docs/en/api/v2#blog-drafts</string>
     <string name="link_posting">https://www.tumblr.com/docs/en/api/v2#posting</string>
     <string name="link_post_edit">https://www.tumblr.com/docs/en/api/v2#editing</string>
+    <string name="link_post_reblog">https://www.tumblr.com/docs/en/api/v2#reblogging</string>
+    <string name="link_post_delete">https://www.tumblr.com/docs/en/api/v2#deleting-posts</string>
 </resources>
