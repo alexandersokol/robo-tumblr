@@ -20,6 +20,7 @@ import com.robotumblr.sample.util.StorageUtils;
 import com.sun40.robotumblr.QueryService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.model.posting.PostCreator;
 import com.sun40.robotumblr.receiver.BlogNewPostReceiver;
@@ -34,6 +35,9 @@ import java.util.List;
 abstract class BasePostFragment extends BaseFragment implements BlogNewPostReceiver.BlogPostListener {
 
     private BlogNewPostReceiver mBlogNewPostReceiver;
+
+    static final String KEY_POST = "key_post";
+    static final String KEY_HOSTNAME = "key_hostname";
 
     private final List<String> mHostnames = new ArrayList<>();
     private final List<String> mStates = new ArrayList<>();
@@ -50,11 +54,17 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
     private Spinner mHostnameSpinner;
     private Spinner mStateSpinner;
 
+    private Post mEditPost;
+    private String mHostname;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBlogNewPostReceiver = new BlogNewPostReceiver(new Handler());
+        if (getArguments() != null) {
+            mEditPost = getArguments().getParcelable(KEY_POST);
+            mHostname = getArguments().getString(KEY_HOSTNAME);
+        }
     }
 
 
@@ -90,9 +100,44 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
 
         rootView.addView(createView(inflater));
 
+        if (isInEditMode()) {
+            mHostnameSpinner.setVisibility(View.GONE);
+            rootView.findViewById(R.id.tumblr_hostname).setVisibility(View.GONE);
+            switch (mEditPost.getState()) {
+                case TumblrExtras.State.PUBLISHED:
+                    mStateSpinner.setSelection(1);
+                    break;
+
+                case TumblrExtras.State.QUEUED:
+                    mStateSpinner.setSelection(2);
+                    break;
+
+                case TumblrExtras.State.DRAFT:
+                    mStateSpinner.setSelection(3);
+                    break;
+
+                case TumblrExtras.State.PRIVATE:
+                    mStateSpinner.setSelection(4);
+                    break;
+            }
+
+            if (mEditPost.getTags() != null && mEditPost.getTags().length > 0) {
+                StringBuilder b = new StringBuilder();
+                for (String tag : mEditPost.getTags()) {
+                    b.append(tag).append(", ");
+                }
+                mTagsEdit.setText(b.toString());
+            }
+
+            onPostInit(mEditPost);
+        }
+
         return rootView;
     }
 
+    protected Post getEditPost() {
+        return mEditPost;
+    }
 
     @Override
     public void onResume() {
@@ -114,6 +159,9 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
 
 
     protected String getHostname() {
+        if(!TextUtils.isEmpty(mHostname))
+            return mHostname;
+
         if (mHostnames.isEmpty())
             return null;
         else
@@ -132,8 +180,12 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
                 if (creator.valid()) {
                     if (!TextUtils.isEmpty(mTagsEdit.getText().toString()))
                         creator.setTags(mTagsEdit.getText().toString());
+                    //noinspection ResourceType
                     creator.setPostState(state);
-                    getActivity().startService(QueryService.newPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
+                    if(isInEditMode())
+                        getActivity().startService(QueryService.editPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
+                    else
+                        getActivity().startService(QueryService.newPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
                     switch (creator.getPostType()) {
                         case TumblrExtras.Post.VIDEO:
                         case TumblrExtras.Post.PHOTO:
@@ -150,9 +202,16 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
         }
     }
 
+
+    protected boolean isInEditMode() {
+        return mEditPost != null;
+    }
+
     protected abstract View createView(LayoutInflater inflater);
 
     protected abstract PostCreator onPost();
+
+    protected abstract void onPostInit(Post p);
 
 
     @Override

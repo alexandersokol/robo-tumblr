@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.robotumblr.sample.R;
+import com.sun40.robotumblr.model.Post;
+import com.sun40.robotumblr.model.TextPost;
 import com.sun40.robotumblr.model.posting.PostCreator;
 import com.sun40.robotumblr.model.posting.TextPostCreator;
 
@@ -39,6 +41,16 @@ public class PostTextFragment extends BasePostFragment {
         creator.setTitle(mTitleEdit.getText().toString());
         creator.setBody(mBodyEdit.getText().toString());
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        TextPost post = (TextPost) p;
+        if (post.getTitle() != null)
+            mTitleEdit.setText(post.getTitle());
+
+        if (post.getBody() != null)
+            mBodyEdit.setText(post.getBody());
     }
 
 

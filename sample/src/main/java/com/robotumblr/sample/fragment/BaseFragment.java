@@ -26,8 +26,6 @@ import com.sun40.robotumblr.OnTokenInvalidatedListener;
  */
 abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListener {
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +39,7 @@ abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListen
                 onRun();
             }
         });
+        rootView.findViewById(R.id.btn_run).setVisibility(isRunBtnVisible() ? View.VISIBLE : View.GONE);
         TextView titleView = (TextView) rootView.findViewById(R.id.title_tv);
         titleView.setText(getToolbarText());
         rootView.findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
@@ -62,6 +61,10 @@ abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListen
     }
 
 
+    protected boolean isRunBtnVisible() {
+        return true;
+    }
+
     protected void hideKeyboard() {
         View view = getActivity().getCurrentFocus();
         if (view != null) {
@@ -82,11 +85,11 @@ abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListen
         Toast.makeText(getContext(), "Token invalidated", Toast.LENGTH_SHORT).show();
     }
 
-    protected void showDialog(){
+    protected void showDialog() {
         SimpleDialog.show(false, false, false, getFragmentManager());
     }
 
-    protected void hideDialog(){
+    protected void hideDialog() {
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(SimpleDialog.DIALOG_INTENT_ACTION_CANCEL));
     }
 

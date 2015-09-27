@@ -1103,6 +1103,9 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         boolean notesInfo = intent.getBooleanExtra(KEY_NOTES_INFO, false);
         String filter = intent.getStringExtra(KEY_FILTER);
 
+        if(TextUtils.isEmpty(filter))
+            filter = TumblrExtras.Filter.TEXT;
+
         if (TextUtils.isEmpty(hostname)) {
             mResultReceiver.send(CODE_ERROR, Bundle.EMPTY);
             return;
@@ -1794,7 +1797,6 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         intent.putExtra(KEY_NOTES_INFO, false);
         return intent;
     }
-
 
     /**
      * Request to get blog posts

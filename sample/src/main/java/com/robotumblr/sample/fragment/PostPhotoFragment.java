@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.robotumblr.sample.ItemAdapter;
 import com.robotumblr.sample.R;
+import com.sun40.robotumblr.model.PhotoPost;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.posting.PhotoPostCreator;
 import com.sun40.robotumblr.model.posting.PostCreator;
 
@@ -125,6 +127,15 @@ public class PostPhotoFragment extends BasePostFragment implements ItemAdapter.O
         }
 
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        PhotoPost post = (PhotoPost) p;
+        if (post.getCaption() != null)
+            mCaptionEdit.setText(post.getCaption());
+        if (post.getLinkUrl() != null)
+            mLinkEdit.setText(post.getLinkUrl());
     }
 
     @Override

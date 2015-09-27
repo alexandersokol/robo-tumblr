@@ -8,6 +8,7 @@ import android.os.Parcel;
  */
 public final class VideoPost extends Post {
 
+    private final String mCaption;
     private final String mVideoUrl;
     private final String mThumbnailUrl;
     private final int mThumbnailWidth;
@@ -19,6 +20,7 @@ public final class VideoPost extends Post {
 
     VideoPost(RawPost raw) {
         super(raw);
+        mCaption = raw.caption;
         mVideoUrl = raw.videoUrl;
         mThumbnailUrl = raw.thumbnail_url;
         mThumbnailWidth = raw.thumbnail_width;
@@ -27,6 +29,10 @@ public final class VideoPost extends Post {
         mVideoType = raw.video_type;
         mPlacementId = raw.placement_id;
         mPermalinkUrl = raw.permalink_url;
+    }
+
+    public String getCaption() {
+        return mCaption;
     }
 
     public String getVideoUrl() {
@@ -66,6 +72,7 @@ public final class VideoPost extends Post {
         String separator = System.getProperty("line.separator");
         return "VideoPost{" + separator +
                 super.toString() +
+                "\tmCaption='" + mCaption + '\'' + separator +
                 "\tmVideoUrl='" + mVideoUrl + '\'' + separator +
                 "\tmThumbnailUrl='" + mThumbnailUrl + '\'' + separator +
                 "\tmThumbnailWidth=" + mThumbnailWidth + separator +
@@ -85,6 +92,7 @@ public final class VideoPost extends Post {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeString(this.mCaption);
         dest.writeString(this.mVideoUrl);
         dest.writeString(this.mThumbnailUrl);
         dest.writeInt(this.mThumbnailWidth);
@@ -97,6 +105,7 @@ public final class VideoPost extends Post {
 
     protected VideoPost(Parcel in) {
         super(in);
+        this.mCaption = in.readString();
         this.mVideoUrl = in.readString();
         this.mThumbnailUrl = in.readString();
         this.mThumbnailWidth = in.readInt();

@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.robotumblr.sample.R;
+import com.sun40.robotumblr.model.Post;
+import com.sun40.robotumblr.model.QuotePost;
 import com.sun40.robotumblr.model.posting.PostCreator;
 import com.sun40.robotumblr.model.posting.QuotePostCreator;
 
@@ -40,6 +42,16 @@ public class PostQuoteFragment extends BasePostFragment {
         creator.setSource(mSourceEdit.getText().toString());
         creator.setQuote(mQuoteEdit.getText().toString());
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        QuotePost post = ((QuotePost) p);
+        if (post.getSource() != null)
+            mSourceEdit.setText(post.getSource());
+
+        if (post.getText() != null)
+            mQuoteEdit.setText(post.getText());
     }
 
     @Override

@@ -29,6 +29,7 @@ import com.robotumblr.sample.fragment.BlogPostsFragment;
 import com.robotumblr.sample.fragment.BlogQueueFragment;
 import com.robotumblr.sample.fragment.PostAudioFragment;
 import com.robotumblr.sample.fragment.PostChatFragment;
+import com.robotumblr.sample.fragment.PostEditFragment;
 import com.robotumblr.sample.fragment.PostLinkFragment;
 import com.robotumblr.sample.fragment.PostPhotoFragment;
 import com.robotumblr.sample.fragment.PostQuoteFragment;
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void pushFragment(Fragment fragment) {
+    public void pushFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -305,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_post_edit:
-
+                fragment = new PostEditFragment();
                 break;
 
             case R.id.btn_post_reblog:

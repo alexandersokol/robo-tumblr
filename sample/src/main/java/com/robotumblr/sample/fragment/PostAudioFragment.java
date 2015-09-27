@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.util.StorageUtils;
+import com.sun40.robotumblr.model.AudioPost;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.posting.AudioPostCreator;
 import com.sun40.robotumblr.model.posting.PostCreator;
 import com.sun40.robotumblr.model.posting.VideoPostCreator;
@@ -92,6 +94,13 @@ public class PostAudioFragment extends BasePostFragment {
             creator.setData(mSourceEdit.getText().toString());
 
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        AudioPost post = (AudioPost) p;
+        if(post.getCaption() != null)
+            mCaptionEdit.setText(post.getCaption());
     }
 
     @Override

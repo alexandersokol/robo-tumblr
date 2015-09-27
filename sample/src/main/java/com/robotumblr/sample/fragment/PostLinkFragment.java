@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.robotumblr.sample.R;
+import com.sun40.robotumblr.model.LinkPost;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.posting.LinkPostCreator;
 import com.sun40.robotumblr.model.posting.PostCreator;
 
@@ -45,6 +47,19 @@ public class PostLinkFragment extends BasePostFragment {
         creator.setUrl(mUrlEdit.getText().toString());
         creator.setDescription(mDescriptionEdit.getText().toString());
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        LinkPost post = (LinkPost) p;
+        if (post.getTitle() != null)
+            mTitleEdit.setText(post.getTitle());
+
+        if (post.getUrl() != null)
+            mUrlEdit.setText(post.getUrl());
+
+        if (post.getDescription() != null)
+            mDescriptionEdit.setText(post.getDescription());
     }
 
     @Override

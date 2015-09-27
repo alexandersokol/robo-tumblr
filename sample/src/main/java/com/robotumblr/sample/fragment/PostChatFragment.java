@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.robotumblr.sample.R;
+import com.sun40.robotumblr.model.ChatPost;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.posting.ChatPostCreator;
 import com.sun40.robotumblr.model.posting.PostCreator;
 
@@ -40,6 +42,15 @@ public class PostChatFragment extends BasePostFragment {
         creator.setTitle(mTitleEdit.getText().toString());
         creator.setConversation(mConversationEdit.getText().toString());
         return creator;
+    }
+
+    @Override
+    protected void onPostInit(Post p) {
+        ChatPost chat = (ChatPost) p;
+        if (chat.getTitle() != null)
+            mTitleEdit.setText(chat.getTitle());
+        if (chat.getBody() != null)
+            mConversationEdit.setText(chat.getBody());
     }
 
     @Override
