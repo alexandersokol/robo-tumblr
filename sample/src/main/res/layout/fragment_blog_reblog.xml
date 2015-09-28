@@ -44,7 +44,7 @@
         style="@style/SimpleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/comment_et"
+        android:layout_alignBottom="@+id/comment_et"
         android:layout_alignTop="@+id/comment_et"
         android:gravity="center_vertical"
         android:text="@string/comment" />
