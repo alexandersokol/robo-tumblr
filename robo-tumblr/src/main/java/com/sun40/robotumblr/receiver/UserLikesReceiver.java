@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
 import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.RawPost;
 
 import java.util.Arrays;
@@ -37,14 +38,14 @@ public class UserLikesReceiver extends BaseResultReceiver<UserLikesReceiver.User
 
     @Override
     protected void onFinish(Bundle data) {
-        RawPost[] posts = (RawPost[]) data.getParcelableArray(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
         if (posts != null) {
             int total = data.getInt(QueryService.KEY_TOTAL);
             int limit = data.getInt(QueryService.KEY_LIMIT);
             int offset = data.getInt(QueryService.KEY_OFFSET);
             long before = data.getLong(QueryService.KEY_BEFORE);
             long after = data.getLong(QueryService.KEY_AFTER);
-            getListener().onUserLikesSuccess(Arrays.asList(posts), total, limit, offset, before, after);
+            getListener().onUserLikesSuccess(posts, total, limit, offset, before, after);
 
         } else
             getListener().onUserLikesFail(null);
@@ -53,6 +54,6 @@ public class UserLikesReceiver extends BaseResultReceiver<UserLikesReceiver.User
     public interface UserLikesListener extends OnTokenInvalidatedListener {
         void onUserLikesFail(String error);
 
-        void onUserLikesSuccess(List<RawPost> posts, int total, int limit, int offset, long before, long after);
+        void onUserLikesSuccess(List<Post> posts, int total, int limit, int offset, long before, long after);
     }
 }

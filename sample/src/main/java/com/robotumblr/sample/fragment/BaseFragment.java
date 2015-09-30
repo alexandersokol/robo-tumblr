@@ -27,6 +27,8 @@ import com.sun40.robotumblr.OnTokenInvalidatedListener;
  */
 abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListener {
 
+    protected String separator = System.getProperty("line.separator");
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

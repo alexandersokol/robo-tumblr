@@ -38,8 +38,6 @@ public class BlogLikesFragment extends BaseFragment implements BlogLikesReceiver
     private EditText mUserNameEditText;
     private TextView mContentText;
 
-    private List<String> mHostnames = new ArrayList<>();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
