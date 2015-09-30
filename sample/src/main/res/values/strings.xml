@@ -72,6 +72,7 @@
     <string name="audio">Audio: </string>
     <string name="comment">Comment: </string>
     <string name="post_id_to_remove">Post id to remove: </string>
+    <string name="type">Type: </string>
 
     <string-array name="protocol_array">
         <item>API Key</item>

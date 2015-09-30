@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
 import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.RawPost;
 
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class UserDashboardReceiver extends BaseResultReceiver<UserDashboardRecei
 
     @Override
     protected void onFinish(Bundle data) {
-        RawPost[] posts = (RawPost[]) data.getParcelableArray(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
         if (posts != null) {
             int limit = data.getInt(QueryService.KEY_LIMIT);
             int offset = data.getInt(QueryService.KEY_OFFSET);
@@ -46,7 +47,7 @@ public class UserDashboardReceiver extends BaseResultReceiver<UserDashboardRecei
             long sinceId = data.getLong(QueryService.KEY_ID);
             boolean reblogInfo = data.getBoolean(QueryService.KEY_REBLOG_INFO);
             boolean notesInfo = data.getBoolean(QueryService.KEY_NOTES_INFO);
-            getListener().onUserDashboardSuccess(Arrays.asList(posts), limit, offset, type, sinceId, reblogInfo, notesInfo);
+            getListener().onUserDashboardSuccess(posts, limit, offset, type, sinceId, reblogInfo, notesInfo);
         } else
             getListener().onUserDashboardFail(null);
 
@@ -55,6 +56,6 @@ public class UserDashboardReceiver extends BaseResultReceiver<UserDashboardRecei
     public interface UserDashboardListener extends OnTokenInvalidatedListener {
         void onUserDashboardFail(String error);
 
-        void onUserDashboardSuccess(List<RawPost> posts, int limit, int offset, String type, long sinceId, boolean reblogInfo, boolean notesInfo);
+        void onUserDashboardSuccess(List<Post> posts, int limit, int offset, String type, long sinceId, boolean reblogInfo, boolean notesInfo);
     }
 }
