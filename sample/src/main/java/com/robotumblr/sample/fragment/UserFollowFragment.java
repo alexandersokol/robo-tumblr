@@ -94,7 +94,10 @@ public class UserFollowFragment extends BaseFragment implements UserBlogFollowRe
         if (mBlog == null || mBlog.url == null) {
             Toast.makeText(getContext(), "Blog is null", Toast.LENGTH_SHORT).show();
         } else {
-            getActivity().startService(QueryService.userFollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
+            if (mFollow)
+                getActivity().startService(QueryService.userFollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
+            else
+                getActivity().startService(QueryService.userUnfollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
             showDialog();
         }
     }

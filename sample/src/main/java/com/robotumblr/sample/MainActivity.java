@@ -41,6 +41,7 @@ import com.robotumblr.sample.fragment.UserDashboardFragment;
 import com.robotumblr.sample.fragment.UserFollowFragment;
 import com.robotumblr.sample.fragment.UserFollowingsFragment;
 import com.robotumblr.sample.fragment.UserInfoFragment;
+import com.robotumblr.sample.fragment.UserLikeFragment;
 import com.robotumblr.sample.fragment.UserLikesFragment;
 import com.robotumblr.sample.util.StorageUtils;
 import com.sun40.robotumblr.receiver.AccessTokenReceiver;
@@ -349,11 +350,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_user_like:
-
+                fragment = UserLikeFragment.getInstance(true);
                 break;
 
             case R.id.btn_user_unlike:
-
+                fragment = UserLikeFragment.getInstance(false);
                 break;
 
             case R.id.btn_tagged:
