@@ -73,6 +73,8 @@
     <string name="comment">Comment: </string>
     <string name="post_id_to_remove">Post id to remove: </string>
     <string name="type">Type: </string>
+    <string name="blog_to_follow">Blog to follow: </string>
+    <string name="blog_to_unfollow">Blog to follow: </string>
 
     <string-array name="protocol_array">
         <item>API Key</item>
