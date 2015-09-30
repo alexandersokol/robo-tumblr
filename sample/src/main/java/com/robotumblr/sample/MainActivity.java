@@ -38,6 +38,7 @@ import com.robotumblr.sample.fragment.PostQuoteFragment;
 import com.robotumblr.sample.fragment.PostTextFragment;
 import com.robotumblr.sample.fragment.PostVideoFragment;
 import com.robotumblr.sample.fragment.UserDashboardFragment;
+import com.robotumblr.sample.fragment.UserFollowingsFragment;
 import com.robotumblr.sample.fragment.UserInfoFragment;
 import com.robotumblr.sample.fragment.UserLikesFragment;
 import com.robotumblr.sample.util.StorageUtils;
@@ -335,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_user_followings:
-
+                fragment = new UserFollowingsFragment();
                 break;
 
             case R.id.btn_user_follow:

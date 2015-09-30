@@ -29,6 +29,18 @@ public class SimpleBlog implements Parcelable {
         dest.writeLong(this.updated);
     }
 
+    @Override
+    public String toString() {
+        String separator = System.getProperty("line.separator");
+        return "SimpleBlog{" + separator +
+                "\tname='" + name + '\''  + separator +
+                "\ttitle='" + title + '\'' + separator +
+                "\tdescription='" + description + '\'' + separator +
+                "\turl='" + url + '\'' + separator +
+                "\tupdated=" + updated + separator +
+                '}';
+    }
+
     public SimpleBlog() {
     }
 
