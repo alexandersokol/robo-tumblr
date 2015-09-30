@@ -11,4 +11,5 @@
     <string name="link_post_edit">https://www.tumblr.com/docs/en/api/v2#editing</string>
     <string name="link_post_reblog">https://www.tumblr.com/docs/en/api/v2#reblogging</string>
     <string name="link_post_delete">https://www.tumblr.com/docs/en/api/v2#deleting-posts</string>
+    <string name="link_user_methods">https://www.tumblr.com/docs/en/api/v2#user-methods</string>
 </resources>

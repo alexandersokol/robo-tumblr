@@ -3,6 +3,8 @@ package com.sun40.robotumblr.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
+
 /**
  * Created by Alexander Sokol
  * on 14.09.15 12:01.
@@ -40,6 +42,30 @@ public class User implements Parcelable {
 
 
     public User() {
+    }
+
+    @Override
+    public String toString() {
+        String separator = System.getProperty("line.separator");
+        StringBuilder builder = new StringBuilder();
+        builder.append("User{" + separator +
+                "\tfollowing=" + following + separator +
+                "\tdefault_post_format='" + default_post_format + '\'' + separator +
+                "\tname='" + name + '\'' + separator +
+                "\tlikes=" + likes + separator +
+                "\tblogs count=").append((blogs != null) ? blogs.length : 0);
+
+        builder.append(separator).append(separator);
+        if (blogs != null) {
+            for (Blog blog : blogs) {
+                builder.append(blog.toString());
+                builder.append(separator);
+            }
+        }
+
+        builder.append('}');
+
+        return builder.toString();
     }
 
     @Override

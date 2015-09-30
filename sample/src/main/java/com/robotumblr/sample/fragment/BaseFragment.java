@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,13 @@ abstract class BaseFragment extends Fragment implements OnTokenInvalidatedListen
 
     protected void hideDialog() {
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(SimpleDialog.DIALOG_INTENT_ACTION_CANCEL));
+    }
+
+    protected void onFail(String error){
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(SimpleDialog.DIALOG_INTENT_ACTION_CANCEL));
+        if (TextUtils.isEmpty(error))
+            error = "Failed";
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     protected abstract View onCreateView(LayoutInflater inflater);
