@@ -75,6 +75,7 @@
     <string name="type">Type: </string>
     <string name="blog_to_follow">Blog to follow: </string>
     <string name="blog_to_unfollow">Blog to unfollow: </string>
+    <string name="before">Before: </string>
 
     <string-array name="protocol_array">
         <item>API Key</item>
@@ -103,6 +104,7 @@
     <string name="hint_required">Required</string>
     <string name="hint_tags">Comma-separated tags</string>
     <string name="hint_photo_link">The "click-through URL" for the photo</string>
+    <string name="hint_before">Before timestamp</string>
 
 
     <string name="title_blog_info">Blog Info</string>

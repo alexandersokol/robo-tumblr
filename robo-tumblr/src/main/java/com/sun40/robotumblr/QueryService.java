@@ -2265,7 +2265,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                 <li>raw – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
      * @return Intent to start {@link QueryService}
      */
-    public static Intent tagged(@NonNull Context context, @NonNull TaggedReceiver receiver, @NonNull String tag, long before, int limit, @Nullable @TumblrExtras.PostType String filter) {
+    public static Intent tagged(@NonNull Context context, @NonNull TaggedReceiver receiver, @NonNull String tag, long before, int limit, @Nullable @TumblrExtras.FilterType String filter) {
         Intent intent = getBaseIntent(context, receiver, ACTION_TAGGED);
         intent.putExtra(KEY_TAG, tag);
         intent.putExtra(KEY_BEFORE, checkTimestamp(before));

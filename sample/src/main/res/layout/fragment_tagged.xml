@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tag_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tag_et"
+        android:layout_alignTop="@+id/tag_et"
+        android:gravity="center_vertical"
+        android:text="@string/tag" />
+
+    <EditText
+        android:id="@+id/tag_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@+id/tag_tv"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_required" />
+
+    <TextView
+        android:id="@+id/timestamp_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/timestamp_et"
+        android:layout_alignTop="@+id/timestamp_et"
+        android:gravity="center_vertical"
+        android:text="@string/before" />
+
+    <EditText
+        android:id="@+id/timestamp_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tag_et"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_toEndOf="@+id/timestamp_tv"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_before" />
+
+    <TextView
+        android:id="@+id/limit_tv"
+        style="@style/SimpleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/limit_et"
+        android:layout_alignTop="@+id/limit_et"
+        android:gravity="center_vertical"
+        android:text="@string/limit" />
+
+    <EditText
+        android:id="@+id/limit_et"
+        style="@style/SimpleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timestamp_et"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_toEndOf="@+id/limit_tv"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_limit" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/limit_et"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/content_tv"
+            style="@style/ContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+</RelativeLayout>

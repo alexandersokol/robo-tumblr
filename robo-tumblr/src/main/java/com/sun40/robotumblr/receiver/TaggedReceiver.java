@@ -5,9 +5,8 @@ import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
 import com.sun40.robotumblr.QueryService;
-import com.sun40.robotumblr.model.RawPost;
+import com.sun40.robotumblr.model.Post;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,13 +36,13 @@ public class TaggedReceiver extends BaseResultReceiver<TaggedReceiver.TaggedList
 
     @Override
     protected void onFinish(Bundle data) {
-        RawPost[] posts = (RawPost[]) data.getParcelableArray(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
         if (posts != null) {
             String tag = data.getString(QueryService.KEY_TAG);
             long before = data.getLong(QueryService.KEY_BEFORE, -1);
             int limit = data.getInt(QueryService.KEY_LIMIT, -1);
             String filter = data.getString(QueryService.KEY_FILTER);
-            getListener().onTaggedSuccess(Arrays.asList(posts), tag, before, limit, filter);
+            getListener().onTaggedSuccess(posts, tag, before, limit, filter);
         } else
             getListener().onTaggedFail(null);
     }
@@ -51,6 +50,6 @@ public class TaggedReceiver extends BaseResultReceiver<TaggedReceiver.TaggedList
     public interface TaggedListener extends OnTokenInvalidatedListener {
         void onTaggedFail(String error);
 
-        void onTaggedSuccess(List<RawPost> posts, String tag, long before, int limit, String filter);
+        void onTaggedSuccess(List<Post> posts, String tag, long before, int limit, String filter);
     }
 }

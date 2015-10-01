@@ -37,6 +37,7 @@ import com.robotumblr.sample.fragment.PostPhotoFragment;
 import com.robotumblr.sample.fragment.PostQuoteFragment;
 import com.robotumblr.sample.fragment.PostTextFragment;
 import com.robotumblr.sample.fragment.PostVideoFragment;
+import com.robotumblr.sample.fragment.TaggedFragment;
 import com.robotumblr.sample.fragment.UserDashboardFragment;
 import com.robotumblr.sample.fragment.UserFollowFragment;
 import com.robotumblr.sample.fragment.UserFollowingsFragment;
@@ -358,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_tagged:
-
+                fragment = new TaggedFragment();
                 break;
 
         }
