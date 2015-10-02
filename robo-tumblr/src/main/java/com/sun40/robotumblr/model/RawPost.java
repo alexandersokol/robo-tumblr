@@ -31,7 +31,7 @@ public class RawPost {
      * {@link TumblrExtras.Post#VIDEO}
      * {@link TumblrExtras.Post#AUDIO}
      * {@link TumblrExtras.Post#PHOTO}
-     * {@link TumblrExtras.Post#CHAT
+     * {@link TumblrExtras.Post#CHAT}
      */
     public String type;//
     /**
@@ -320,7 +320,7 @@ public class RawPost {
      */
     public Note[] notes;
     /**
-     * Blog & Post trail data
+     * Blog and Post trail data
      */
     public Trail[] trail;
 

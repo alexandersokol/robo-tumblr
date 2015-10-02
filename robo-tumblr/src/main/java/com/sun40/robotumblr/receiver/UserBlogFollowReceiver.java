@@ -43,7 +43,7 @@ public class UserBlogFollowReceiver extends BaseResultReceiver<UserBlogFollowRec
 
         /**
          * @param follow <code>true</code> if user started to follow current blog
-         * @param url
+         * @param url blog url
          */
         void onUserBlogFollowSuccess(boolean follow, String url);
     }

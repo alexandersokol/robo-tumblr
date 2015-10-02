@@ -2,14 +2,14 @@
 
 Simple Android library to fetch and publish data via [Tumblr API](https://www.tumblr.com/docs/en/api/v2). Provides simple arhitecture to manipulate data fetched from server and create/edit posts in Android lifecycle. 
 
-*Robo-tumblr requires at least sdk version 10 (2.3.3) and Java 7*
+*Robo-tumblr requires at least sdk version 17 (2.3.3) and Java 7*
 
 ##Download
 	repositories {
         jcenter()
 	}
 
-	compile 'com.github.sun40:robo-tumblr:1.0.0'
+	compile 'com.github.sun40:robo-tumblr:1.0.1'
 
 ##How to
 
