@@ -2273,14 +2273,4 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         intent.putExtra(KEY_FILTER, filter);
         return intent;
     }
-
-
-    // TODO: 16.09.15 search type not implemented yet
-    static Intent search(@NonNull Context context, @NonNull SearchReceiver receiver, @NonNull String param, @Nullable @TumblrExtras.SearchType String searchType) {
-        Intent intent = getBaseIntent(context, receiver, ACTION_SEARCH);
-        intent.putExtra(KEY_TAG, param);
-        if (searchType != null && (searchType.equals(TumblrExtras.Search.BLOGS) || searchType.equals(TumblrExtras.Search.TAGS)))
-            intent.putExtra(KEY_SEARCH_TYPE, searchType);
-        return intent;
-    }
 }
