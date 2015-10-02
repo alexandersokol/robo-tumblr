@@ -6,10 +6,10 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ android {
 publish {
     groupId = 'com.github.sun40'
     artifactId = 'robo-tumblr'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'Yet another library for Android to work with Tumblr API'
     licences = ['MIT']
     website = 'https://github.com/sun40/robo-tumblr'
