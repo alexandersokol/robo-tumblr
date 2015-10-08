@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.sun40.robotumblr.model.Blog;
+import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.token.AccessToken;
 import com.sun40.robotumblr.token.ConsumerToken;
+
+import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -142,8 +145,17 @@ public final class RoboTumblr {
         }
     }
 
+
+    /**
+     * Request to get Blog info, has additional params while user is authorized see {@link com.sun40.robotumblr.model.Blog}
+     *
+     * @param hostname host name like temp.tumblr.com
+     * @return requested blog {@link Blog} or <code>null</code> on error
+     * @throws RetrofitError while error occurred
+     */
     public Blog blogInfo(@NonNull String hostname) throws RetrofitError {
-        hostname = Util.checkHostname(hostname);
+        hostname = Utils.checkHostname(hostname);
+
         ResponseContainer.BlogContainer container;
         if (mOAuthService != null)
             container = mOAuthService.blogInfo(hostname, mConsumerToken.getToken());
@@ -154,5 +166,116 @@ public final class RoboTumblr {
             return container.response.blog;
 
         return null;
+    }
+
+
+    /**
+     * Request to get Blog avatar, use size param to get specified avatar
+     *
+     * @param hostname host name like temp.tumblr.com
+     * @param size     avatar size of {@link com.sun40.robotumblr.TumblrExtras.TumblrSize}, by default use {@link com.sun40.robotumblr.TumblrExtras.Size#SIZE_UNDEFINED} which returns 64x64 avatar
+     * @return Url for blog avatar or <code>null</code>
+     * @throws RetrofitError while error occurred
+     */
+    public String blogAvatar(@NonNull String hostname, @TumblrExtras.TumblrSize int size) throws RetrofitError {
+        hostname = Utils.checkHostname(hostname);
+
+        try {
+            if (size == TumblrExtras.Size.SIZE_UNDEFINED)
+                mApiService.blogAvatar(hostname);
+            else
+                mApiService.blogAvatar(hostname, size);
+
+        } catch (RetrofitError error) {
+            if (error.getResponse() != null && error.getResponse().getStatus() == Utils.STATUS_FOUND && !TextUtils.isEmpty(error.getResponse().getUrl()))
+                return error.getResponse().getUrl();
+            else
+                throw error;
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Request to get Blog avatar with default size 64x64
+     *
+     * @param hostname host name like temp.tumblr.com
+     * @return Url for blog avatar or <code>null</code>
+     * @throws RetrofitError while error occurred
+     */
+    public String blogAvatar(@NonNull String hostname) throws RetrofitError {
+        return blogAvatar(hostname, TumblrExtras.Size.SIZE_UNDEFINED);
+    }
+
+
+    /**
+     * Request to get specified blog likes by username before timestamp, were user name equals main user blog name
+     * or return 401 Not Authorized otherwise
+     *
+     * @param username user name like temp.tumblr.com, were user name equals main user blog name
+     * @param limit    likes limit per page
+     * @param offset   likes offset from start
+     * @return List of liked posts
+     * @throws RetrofitError while error occurred
+     */
+    public List<Post> blogLikes(@NonNull String username, int limit, int offset) throws RetrofitError {
+        username = Utils.checkHostname(username);
+        limit = Utils.checkLimit(limit);
+        offset = Utils.checkOffset(offset);
+
+        ResponseContainer.BlogLikesContainer container = mApiService.blogLikes(username,
+                limit < 0 ? null : limit,
+                offset < 0 ? null : offset,
+                mConsumerToken.getToken());
+        return Utils.extractPosts(container.response.liked_posts);
+    }
+
+
+    /**
+     * Request to get specified blog likes by username after timestamp, were user name equals main user blog name
+     * or return 401 Not Authorized otherwise
+     *
+     * @param username  host name like temp.tumblr.com, were user name equals main user blog name
+     * @param limit     likes limit per page
+     * @param timestamp unix epoch time stamp
+     * @return List of liked posts
+     * @throws RetrofitError while error occurred
+     */
+    public List<Post> blogLikesBefore(@NonNull String username, int limit, long timestamp) throws RetrofitError {
+        username = Utils.checkHostname(username);
+        limit = Utils.checkLimit(limit);
+        timestamp = Utils.checkTimestamp(timestamp);
+
+        ResponseContainer.BlogLikesContainer container = mApiService.blogLikesBefore(username,
+                limit < 0 ? null : limit,
+                timestamp < 0 ? null : timestamp,
+                mConsumerToken.getToken());
+
+        return Utils.extractPosts(container.response.liked_posts);
+    }
+
+
+    /**
+     * Request to get specified blog likes by username after timestamp, were user name equals main user blog name
+     * or return 401 Not Authorized otherwise
+     *
+     * @param username  host name like temp.tumblr.com, were user name equals main user blog name
+     * @param limit     likes limit per page
+     * @param timestamp unix epoch time stamp
+     * @return List of liked posts
+     * @throws RetrofitError while error occurred
+     */
+    public List<Post> blogLikesAfter(@NonNull String username, int limit, long timestamp) throws RetrofitError {
+        username = Utils.checkHostname(username);
+        limit = Utils.checkLimit(limit);
+        timestamp = Utils.checkTimestamp(timestamp);
+
+        ResponseContainer.BlogLikesContainer container = mApiService.blogLikesAfter(username,
+                limit < 0 ? null : limit,
+                timestamp < 0 ? null : timestamp,
+                mConsumerToken.getToken());
+
+        return Utils.extractPosts(container.response.liked_posts);
     }
 }

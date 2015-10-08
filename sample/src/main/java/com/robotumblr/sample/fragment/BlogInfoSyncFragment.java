@@ -8,9 +8,12 @@ import android.widget.Toast;
 
 import com.robotumblr.sample.R;
 import com.sun40.robotumblr.RoboTumblr;
+import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
+import com.sun40.robotumblr.model.Post;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import retrofit.RetrofitError;
 
@@ -47,7 +50,7 @@ public class BlogInfoSyncFragment extends BaseFragment {
     }
 
 
-    private static class BlogInfoAsync extends AsyncTask<String, Void, Blog> {
+    private static class BlogInfoAsync extends AsyncTask<String, Void, String> {
 
         private WeakReference<BlogInfoSyncFragment> reference;
 
@@ -56,24 +59,32 @@ public class BlogInfoSyncFragment extends BaseFragment {
         }
 
         @Override
-        protected Blog doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             if (params == null)
                 return null;
 
             try {
                 String hostname = params[0];
-                return RoboTumblr.getInstanse(reference.get().getContext()).blogInfo(hostname);
+
+                List<Post> list = RoboTumblr.getInstanse(reference.get().getContext()).blogLikes(hostname, 20, 0);
+
+                StringBuffer b = new StringBuffer();
+                for(Post post : list){
+                    b.append(post.toString());
+                }
+
+                return b.toString();
+
             } catch (RetrofitError error) {
                 return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Blog blog) {
-            if (blog != null && reference.get() != null) {
-                reference.get().mContentText.setText(blog.toString());
-            }
-            else{
+        protected void onPostExecute(String str) {
+            if (str != null && reference.get() != null) {
+                reference.get().mContentText.setText(str);
+            } else {
                 Toast.makeText(reference.get().getContext(), "Failed", Toast.LENGTH_SHORT).show();
             }
         }

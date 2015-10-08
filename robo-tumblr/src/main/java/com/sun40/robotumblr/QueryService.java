@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -38,7 +37,6 @@ import com.sun40.robotumblr.receiver.BlogPostsReceiver;
 import com.sun40.robotumblr.receiver.BlogQueueReceiver;
 import com.sun40.robotumblr.receiver.BlogReblogReceiver;
 import com.sun40.robotumblr.receiver.RequestTokenReceiver;
-import com.sun40.robotumblr.receiver.SearchReceiver;
 import com.sun40.robotumblr.receiver.TaggedReceiver;
 import com.sun40.robotumblr.receiver.UserBlogFollowReceiver;
 import com.sun40.robotumblr.receiver.UserDashboardReceiver;
@@ -68,7 +66,6 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
 
     private static final String TAG = "QueryService";
 
-    private static final int STATUS_FOUND = 301;
     private static final String NOT_AUTHORIZED_CODE = "401";
 
     private static final String ACTION_OAUTH_REQUEST_TOKEN = "action_oauth_request_token";
@@ -1295,7 +1292,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
             L.d(TAG, "response avatar");
 
         } catch (RetrofitError error) {
-            if (error.getResponse() != null && error.getResponse().getStatus() == STATUS_FOUND && !TextUtils.isEmpty(error.getResponse().getUrl())) {
+            if (error.getResponse() != null && error.getResponse().getStatus() == Utils.STATUS_FOUND && !TextUtils.isEmpty(error.getResponse().getUrl())) {
                 Bundle result = new Bundle();
                 result.putInt(KEY_SIZE, size);
                 result.putString(KEY_BLOG_AVATAR, error.getResponse().getUrl());
@@ -1610,7 +1607,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
     public static Intent blogLikesBefore(@NonNull Context context, BlogLikesReceiver likesReceiver, String username, int limit, long timestamp) {
         Intent intent = getBaseIntent(context, likesReceiver, ACTION_BLOG_LIKES_BEFORE);
         intent.putExtra(KEY_HOSTNAME, checkHostname(username));
-        intent.putExtra(KEY_LIMIT, checkLimit(0));
+        intent.putExtra(KEY_LIMIT, checkLimit(limit));
         intent.putExtra(KEY_TIMESTAMP, checkTimestamp(timestamp));
         return intent;
     }
