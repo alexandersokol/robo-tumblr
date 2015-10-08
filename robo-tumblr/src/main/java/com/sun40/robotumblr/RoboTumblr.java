@@ -3,6 +3,7 @@ package com.sun40.robotumblr;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.sun40.robotumblr.model.Blog;
@@ -278,4 +279,118 @@ public final class RoboTumblr {
 
         return Utils.extractPosts(container.response.liked_posts);
     }
+
+
+    /**
+     * Request to get blog posts
+     *
+     * @param hostname   blog hostname like temp.tumblr.com
+     * @param type       The type of post to return. Specify one of the following: {@link com.sun40.robotumblr.TumblrExtras.Post#TEXT}, {@link com.sun40.robotumblr.TumblrExtras.Post#QUOTE}, {@link com.sun40.robotumblr.TumblrExtras.Post#LINK},
+     *                   {@link com.sun40.robotumblr.TumblrExtras.Post#ANSWER}, {@link com.sun40.robotumblr.TumblrExtras.Post#VIDEO}, {@link com.sun40.robotumblr.TumblrExtras.Post#AUDIO},
+     *                   {@link com.sun40.robotumblr.TumblrExtras.Post#PHOTO}, {@link com.sun40.robotumblr.TumblrExtras.Post#CHAT} or null to get all posts
+     * @param tag        Limits the response to posts with the specified tag may be null
+     * @param limit      The number of posts to return: 1–20, inclusive or -1 to use default value 20
+     * @param offset     RawPost number to start at or -1 to use default value 0
+     * @param reblogInfo Indicates whether to return reblog information (specify true or false). Returns the various reblogged_ fields. <i>default: false</i>
+     * @param notesInfo  Indicates whether to return notes information (specify true or false). Returns note count and note metadata. <i>default: false<i/>
+     * @param filter     Specifies the post format to return, other than HTML:
+     *                   {@link com.sun40.robotumblr.TumblrExtras.Filter#TEXT} – Plain text, no HTML
+     *                   {@link com.sun40.robotumblr.TumblrExtras.Filter#RAW} – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
+     *                   <i>Default null - HTML</i>
+     * @return List of blog posts
+     */
+    public List<Post> blogPosts(@NonNull String hostname,
+                                @Nullable @TumblrExtras.PostType String type,
+                                @Nullable String tag, int limit, int offset,
+                                boolean reblogInfo, boolean notesInfo,
+                                @Nullable @TumblrExtras.FilterType String filter) {
+
+        hostname = Utils.checkHostname(hostname);
+        limit = Utils.checkLimit(limit);
+        offset = Utils.checkOffset(offset);
+
+        ResponseContainer.BlogPostsContainer container;
+        if (TextUtils.isEmpty(type)) {
+            if (mOAuthService == null) {
+                container = mApiService.blogPosts(hostname,
+                        mConsumerToken.getToken(),
+                        null,
+                        tag,
+                        limit < 0 ? null : limit,
+                        offset < 0 ? null : offset,
+                        reblogInfo,
+                        notesInfo,
+                        TextUtils.isEmpty(filter) ? null : filter);
+            } else {
+                container = mOAuthService.blogPosts(hostname,
+                        mConsumerToken.getToken(),
+                        null,
+                        tag,
+                        limit < 0 ? null : limit,
+                        offset < 0 ? null : offset,
+                        reblogInfo,
+                        notesInfo,
+                        TextUtils.isEmpty(filter) ? null : filter);
+            }
+        } else {
+            if (mOAuthService == null) {
+                container = mApiService.blogPosts(hostname,
+                        type,
+                        mConsumerToken.getToken(),
+                        null,
+                        tag,
+                        limit < 0 ? null : limit,
+                        offset < 0 ? null : offset,
+                        reblogInfo,
+                        notesInfo,
+                        TextUtils.isEmpty(filter) ? null : filter);
+            } else {
+                container = mOAuthService.blogPosts(hostname,
+                        type,
+                        mConsumerToken.getToken(),
+                        null,
+                        tag,
+                        limit < 0 ? null : limit,
+                        offset < 0 ? null : offset,
+                        reblogInfo,
+                        notesInfo,
+                        TextUtils.isEmpty(filter) ? null : filter);
+            }
+        }
+
+        if (container.response != null && container.response.blog != null && container.response.posts != null) {
+            return Utils.extractPosts(container.response.posts);
+        } else
+            return null;
+    }
+
+
+    /**
+     * Request to get blog posts
+     *
+     * @param hostname blog hostname like temp.tumblr.com
+     * @param limit    The number of posts to return: 1–20, inclusive or -1 to use default value 20
+     * @param offset   RawPost number to start at or -1 to use default value 0
+     * @return List of blog posts
+     */
+    public List<Post> blogPosts(@NonNull String hostname, int limit, int offset) throws RetrofitError {
+        return blogPosts(hostname, null, null, limit, offset, false, false, null);
+    }
+
+
+    /**
+     * Request to get blog posts
+     *
+     * @param hostname blog hostname like temp.tumblr.com
+     * @param type     The type of post to return. Specify one of the following: {@link com.sun40.robotumblr.TumblrExtras.Post#TEXT}, {@link com.sun40.robotumblr.TumblrExtras.Post#QUOTE}, {@link com.sun40.robotumblr.TumblrExtras.Post#LINK},
+     *                 {@link com.sun40.robotumblr.TumblrExtras.Post#ANSWER}, {@link com.sun40.robotumblr.TumblrExtras.Post#VIDEO}, {@link com.sun40.robotumblr.TumblrExtras.Post#AUDIO},
+     *                 {@link com.sun40.robotumblr.TumblrExtras.Post#PHOTO}, {@link com.sun40.robotumblr.TumblrExtras.Post#CHAT} or null to get all posts
+     * @param limit    The number of posts to return: 1–20, inclusive or -1 to use default value 20
+     * @param offset   RawPost number to start at or -1 to use default value 0
+     * @return List of blog posts
+     */
+    public List<Post> blogPosts(@NonNull String hostname,  @Nullable @TumblrExtras.PostType String type, int limit, int offset) throws RetrofitError {
+        return blogPosts(hostname, type, null, limit, offset, false, false, null);
+    }
+
 }

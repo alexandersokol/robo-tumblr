@@ -66,7 +66,9 @@ public class BlogInfoSyncFragment extends BaseFragment {
             try {
                 String hostname = params[0];
 
-                List<Post> list = RoboTumblr.getInstanse(reference.get().getContext()).blogLikes(hostname, 20, 0);
+                List<Post> list = RoboTumblr
+                        .getInstanse(reference.get().getContext())
+                        .blogPosts(hostname, TumblrExtras.Post.PHOTO, 20, 0);
 
                 StringBuffer b = new StringBuffer();
                 for(Post post : list){
