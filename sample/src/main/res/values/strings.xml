@@ -11,6 +11,7 @@
     <string name="post_methods">Post methods</string>
     <string name="user_methods">User methods</string>
     <string name="tagged_methods">Tagged method</string>
+    <string name="sync_methods">Sync</string>
 
     <string name="blog_info">Info</string>
     <string name="blog_avatar">Avatar</string>
@@ -46,6 +47,7 @@
     <string name="user_unlike">Unlike</string>
 
     <string name="tagged">Tagged</string>
+    <string name="blog_info_sync">Test</string>
 
     <string name="source_link">Links</string>
     <string name="source_files">Files</string>

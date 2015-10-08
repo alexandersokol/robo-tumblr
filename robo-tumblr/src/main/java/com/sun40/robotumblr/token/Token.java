@@ -14,10 +14,10 @@ public class Token implements Parcelable {
     private final String mSecret;
 
     public Token(String token, String secret) {
-        if(token == null)
+        if (token == null)
             token = "";
 
-        if(secret == null)
+        if (secret == null)
             secret = "";
 
         mToken = token;
@@ -35,6 +35,23 @@ public class Token implements Parcelable {
 
     public boolean isEmpty() {
         return TextUtils.isEmpty(mToken) || TextUtils.isEmpty(mSecret);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Token token = (Token) o;
+
+        return mToken.equals(token.mToken) && mSecret.equals(token.mSecret);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mToken.hashCode();
+        result = 31 * result + mSecret.hashCode();
+        return result;
     }
 
     @Override

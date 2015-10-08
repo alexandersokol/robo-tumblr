@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,14 +27,15 @@ import com.robotumblr.sample.fragment.BlogLikesFragment;
 import com.robotumblr.sample.fragment.BlogPostByIdFragment;
 import com.robotumblr.sample.fragment.BlogPostsFragment;
 import com.robotumblr.sample.fragment.BlogQueueFragment;
-import com.robotumblr.sample.fragment.PostDeleteFragment;
-import com.robotumblr.sample.fragment.PostReblogFragment;
+import com.robotumblr.sample.fragment.BlogInfoSyncFragment;
 import com.robotumblr.sample.fragment.PostAudioFragment;
 import com.robotumblr.sample.fragment.PostChatFragment;
+import com.robotumblr.sample.fragment.PostDeleteFragment;
 import com.robotumblr.sample.fragment.PostEditFragment;
 import com.robotumblr.sample.fragment.PostLinkFragment;
 import com.robotumblr.sample.fragment.PostPhotoFragment;
 import com.robotumblr.sample.fragment.PostQuoteFragment;
+import com.robotumblr.sample.fragment.PostReblogFragment;
 import com.robotumblr.sample.fragment.PostTextFragment;
 import com.robotumblr.sample.fragment.PostVideoFragment;
 import com.robotumblr.sample.fragment.TaggedFragment;
@@ -45,14 +46,14 @@ import com.robotumblr.sample.fragment.UserInfoFragment;
 import com.robotumblr.sample.fragment.UserLikeFragment;
 import com.robotumblr.sample.fragment.UserLikesFragment;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.receiver.AccessTokenReceiver;
 import com.sun40.robotumblr.AuthActivity;
 import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.RoboTumblr;
+import com.sun40.robotumblr.model.User;
+import com.sun40.robotumblr.receiver.AccessTokenReceiver;
 import com.sun40.robotumblr.receiver.RequestTokenReceiver;
 import com.sun40.robotumblr.receiver.UserInfoReceiver;
-import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.token.RequestToken;
-import com.sun40.robotumblr.RoboTumblr;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, RequestTokenReceiver.OnRequestTokenListener, AccessTokenReceiver.OnAccessTokenListener, UserInfoReceiver.UserInfoListener {
@@ -360,6 +361,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_tagged:
                 fragment = new TaggedFragment();
+                break;
+
+            case R.id.btn_blog_info_sync:
+                fragment = new BlogInfoSyncFragment();
                 break;
 
         }

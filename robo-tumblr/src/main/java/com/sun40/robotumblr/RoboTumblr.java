@@ -2,15 +2,15 @@ package com.sun40.robotumblr;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.sun40.robotumblr.R;
-import com.sun40.robotumblr.model.User;
+import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.token.AccessToken;
 import com.sun40.robotumblr.token.ConsumerToken;
 
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 
 
 /**
@@ -24,19 +24,43 @@ public final class RoboTumblr {
 
     private static final String KEY_ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
     private static final String KEY_ACCESS_TOKEN_SECRET = "ACCESS_TOKEN_SECRET";
-    private static final String KEY_USER = "key_user";
 
     static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.BASIC;
 
+    private static volatile RoboTumblr sInstanse;
+
+    private ApiService mApiService;
+    private OAuthService mOAuthService;
+    private OAuthClient mOAuthClient;
+    private ConsumerToken mConsumerToken;
+    private AccessToken mAccessToken;
+
     private RoboTumblr() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ApiService.API_ENDPOINT)
+                .setLogLevel(RoboTumblr.LOG_LEVEL)
+                .build();
+
+        mApiService = restAdapter.create(ApiService.class);
     }
+
+
+    public static RoboTumblr getInstanse(Context context) {
+        synchronized (RoboTumblr.class) {
+            if (sInstanse == null)
+                sInstanse = new RoboTumblr();
+            sInstanse.update(context);
+        }
+        return sInstanse;
+    }
+
 
     public static void setRetrofitLogLevel(RestAdapter.LogLevel level) {
         if (level != null)
             LOG_LEVEL = level;
     }
 
-    public static void setVerbose(boolean verbose){
+    public static void setVerbose(boolean verbose) {
         L.VERBOSE = verbose;
     }
 
@@ -69,12 +93,66 @@ public final class RoboTumblr {
             return new AccessToken(token, secret);
     }
 
+
     public static boolean isUserLoggedIn(Context context) {
         return getAccessToken(context) != null;
     }
+
 
     private static SharedPreferences getTokenPreferences(Context context) {
         return context.getSharedPreferences(TOKEN_FILE, Context.MODE_PRIVATE);
     }
 
+
+    private void update(Context context) {
+        if (mConsumerToken == null)
+            mConsumerToken = getConsumerToken(context);
+
+        AccessToken savedToken = getAccessToken(context);
+        boolean needNewInstanse = false;
+
+        if (mAccessToken != null) {
+            if (savedToken == null)
+                mAccessToken = null;
+            else {
+                if (!mAccessToken.equals(savedToken)) {
+                    mAccessToken = savedToken;
+                    needNewInstanse = true;
+                }
+            }
+        } else if (savedToken != null) {
+            mAccessToken = savedToken;
+            needNewInstanse = true;
+        }
+
+        if (mAccessToken != null && needNewInstanse) {
+            mOAuthClient = new OAuthClient(mConsumerToken, mAccessToken);
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(ApiService.API_ENDPOINT)
+                    .setClient(mOAuthClient)
+                    .setLogLevel(RoboTumblr.LOG_LEVEL)
+                    .build();
+
+            mOAuthService = restAdapter.create(OAuthService.class);
+        }
+
+        if (mAccessToken == null) {
+            mOAuthClient = null;
+            mOAuthService = null;
+        }
+    }
+
+    public Blog blogInfo(@NonNull String hostname) throws RetrofitError {
+        hostname = Util.checkHostname(hostname);
+        ResponseContainer.BlogContainer container;
+        if (mOAuthService != null)
+            container = mOAuthService.blogInfo(hostname, mConsumerToken.getToken());
+        else
+            container = mApiService.blogInfo(hostname, mConsumerToken.getToken());
+
+        if (container != null && container.response != null)
+            return container.response.blog;
+
+        return null;
+    }
 }
