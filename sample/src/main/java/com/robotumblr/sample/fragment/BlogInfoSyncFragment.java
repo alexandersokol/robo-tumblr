@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.sun40.robotumblr.RoboTumblr;
 import com.sun40.robotumblr.TumblrExtras;
-import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 
 import java.lang.ref.WeakReference;
@@ -68,10 +67,10 @@ public class BlogInfoSyncFragment extends BaseFragment {
 
                 List<Post> list = RoboTumblr
                         .getInstanse(reference.get().getContext())
-                        .blogPosts(hostname, TumblrExtras.Post.PHOTO, 20, 0);
+                        .tagged("lol", 0, 10, TumblrExtras.Filter.RAW);
 
                 StringBuffer b = new StringBuffer();
-                for(Post post : list){
+                for (Post post : list) {
                     b.append(post.toString());
                 }
 
