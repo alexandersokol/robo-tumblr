@@ -16,14 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.model.User;
-import com.sun40.robotumblr.receiver.BlogAvatarReceiver;
 import com.sun40.robotumblr.QueryService;
 import com.sun40.robotumblr.TumblrExtras;
+import com.sun40.robotumblr.model.User;
+import com.sun40.robotumblr.receiver.BlogAvatarReceiver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -149,10 +148,5 @@ public class BlogAvatarFragment extends BaseFragment implements BlogAvatarReceiv
         Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
         mSizeView.setText(size + "x" + size);
         mLinkView.setText(avatarUrl);
-        Glide.with(getContext())
-                .load(avatarUrl)
-                .placeholder(R.drawable.ic_image_white_24dp)
-                .into(mAvatarView);
-
     }
 }
