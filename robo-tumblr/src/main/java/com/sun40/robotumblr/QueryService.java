@@ -140,6 +140,8 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
     private OAuthClient mOAuthClient;
     private OAuthService mOAuthService;
 
+    private RequestCore mRequestCore;
+
     private long mSummaryUploadSize;
     private long mSummaryTransferredSize;
 
@@ -182,6 +184,11 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         if (accessToken == null) {
             mOAuthService = null;
         }
+
+        if (mRequestCore == null)
+            mRequestCore = new RequestCore(RoboTumblr.getConsumerToken(this));
+
+        mRequestCore.setAccessToken(RoboTumblr.getAccessToken(this));
 
         mSummaryUploadSize = -1;
         mSummaryTransferredSize = -1;
@@ -345,22 +352,9 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
             return;
         }
 
-        ResponseContainer.TaggedContainer container = null;
-
         try {
-            if (mOAuthService != null) {
-                container = mOAuthService.tagged(tag,
-                        before < 0 ? null : before,
-                        limit < 0 ? null : limit,
-                        filter,
-                        mConsumerToken.getToken());
-            } else {
-                container = mApiService.tagged(tag,
-                        before < 0 ? null : before,
-                        limit < 0 ? null : limit,
-                        filter,
-                        mConsumerToken.getToken());
-            }
+
+            ResponseContainer.TaggedContainer container = mRequestCore.tagged(tag, before, limit, filter);
 
             if (container != null && container.response != null) {
                 Bundle data = new Bundle();
@@ -1070,11 +1064,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         }
 
         try {
-            ResponseContainer.BlogPostsContainer container;
-            if (mOAuthService == null)
-                container = mApiService.blogPosts(hostname, mConsumerToken.getToken(), postId, reblogInfo, notesInfo);
-            else
-                container = mOAuthService.blogPosts(hostname, mConsumerToken.getToken(), postId, reblogInfo, notesInfo);
+            ResponseContainer.BlogPostsContainer container = mRequestCore.blogPostById(hostname, postId, reblogInfo, notesInfo);
 
             if (container.response != null && container.response.posts != null && container.response.blog != null) {
                 Bundle data = new Bundle();
@@ -1110,54 +1100,8 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
 
         try {
             mResultReceiver.send(CODE_START, Bundle.EMPTY);
-            ResponseContainer.BlogPostsContainer container;
-            if (TextUtils.isEmpty(type)) {
-                if (mOAuthService == null) {
-                    container = mApiService.blogPosts(hostname,
-                            mConsumerToken.getToken(),
-                            null,
-                            tag,
-                            limit < 0 ? null : limit,
-                            offset < 0 ? null : offset,
-                            reblogInfo,
-                            notesInfo,
-                            TextUtils.isEmpty(filter) ? null : filter);
-                } else {
-                    container = mOAuthService.blogPosts(hostname,
-                            mConsumerToken.getToken(),
-                            null,
-                            tag,
-                            limit < 0 ? null : limit,
-                            offset < 0 ? null : offset,
-                            reblogInfo,
-                            notesInfo,
-                            TextUtils.isEmpty(filter) ? null : filter);
-                }
-            } else {
-                if (mOAuthService == null) {
-                    container = mApiService.blogPosts(hostname,
-                            type,
-                            mConsumerToken.getToken(),
-                            null,
-                            tag,
-                            limit < 0 ? null : limit,
-                            offset < 0 ? null : offset,
-                            reblogInfo,
-                            notesInfo,
-                            TextUtils.isEmpty(filter) ? null : filter);
-                } else {
-                    container = mOAuthService.blogPosts(hostname,
-                            type,
-                            mConsumerToken.getToken(),
-                            null,
-                            tag,
-                            limit < 0 ? null : limit,
-                            offset < 0 ? null : offset,
-                            reblogInfo,
-                            notesInfo,
-                            TextUtils.isEmpty(filter) ? null : filter);
-                }
-            }
+            //noinspection ResourceType
+            ResponseContainer.BlogPostsContainer container = mRequestCore.blogPosts(hostname, type, tag, limit, offset, reblogInfo, notesInfo, filter);
 
             if (container.response != null && container.response.blog != null && container.response.posts != null) {
                 Bundle data = new Bundle();
@@ -1220,12 +1164,12 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
     private void blogLikes(Intent intent) {
         mResultReceiver.send(CODE_START, Bundle.EMPTY);
         String action = intent.getAction();
-        String hostname = intent.getStringExtra(KEY_HOSTNAME);
+        String username = intent.getStringExtra(KEY_HOSTNAME);
         int limit = intent.getIntExtra(KEY_LIMIT, -1);
         int offset = intent.getIntExtra(KEY_OFFSET, -1);
         long timestamp = intent.getLongExtra(KEY_TIMESTAMP, -1);
 
-        if (TextUtils.isEmpty(hostname)) {
+        if (TextUtils.isEmpty(username)) {
             mResultReceiver.send(CODE_ERROR, Bundle.EMPTY);
             return;
         }
@@ -1234,25 +1178,15 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
             ResponseContainer.BlogLikesContainer container;
             switch (action) {
                 case ACTION_BLOG_LIKES_BEFORE:
-                    container = mApiService.blogLikesBefore(hostname,
-                            limit < 0 ? null : limit,
-                            timestamp < 0 ? null : timestamp,
-                            mConsumerToken.getToken());
+                    container = mRequestCore.blogLikesBefore(username, limit, timestamp);
 
                     break;
                 case ACTION_BLOG_LIKES_AFTER:
-                    container = mApiService.blogLikesAfter(hostname,
-                            limit < 0 ? null : limit,
-                            timestamp < 0 ? null : timestamp,
-                            mConsumerToken.getToken());
+                    container = mRequestCore.blogLikesAfter(username, limit, timestamp);
 
                     break;
                 default:
-                    container = mApiService.blogLikes(hostname,
-                            limit < 0 ? null : limit,
-                            offset < 0 ? null : offset,
-                            mConsumerToken.getToken());
-                    break;
+                    container = mRequestCore.blogLikes(username, limit, offset);
             }
 
             if (container != null && container.response != null && container.response.liked_posts != null) {
@@ -1280,26 +1214,19 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
             mResultReceiver.send(CODE_ERROR, Bundle.EMPTY);
             return;
         }
-
         try {
-
-            Response response;
-            if (size == TumblrExtras.Size.SIZE_UNDEFINED)
-                mApiService.blogAvatar(hostname);
-            else
-                mApiService.blogAvatar(hostname, size);
-
-            L.d(TAG, "response avatar");
-
-        } catch (RetrofitError error) {
-            if (error.getResponse() != null && error.getResponse().getStatus() == Utils.STATUS_FOUND && !TextUtils.isEmpty(error.getResponse().getUrl())) {
+            //noinspection ResourceType
+            String avatarUrl = mRequestCore.blogAvatar(hostname, size);
+            if (avatarUrl != null) {
                 Bundle result = new Bundle();
                 result.putInt(KEY_SIZE, size);
-                result.putString(KEY_BLOG_AVATAR, error.getResponse().getUrl());
+                result.putString(KEY_BLOG_AVATAR, avatarUrl);
                 mResultReceiver.send(CODE_SUCCESS, result);
-            } else {
-                handleError("blog avatar", error);
-            }
+            } else
+                mResultReceiver.send(CODE_ERROR, Bundle.EMPTY);
+
+        } catch (RetrofitError error) {
+            handleError("blog avatar", error);
         }
     }
 
@@ -1313,11 +1240,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
         }
 
         try {
-            ResponseContainer.BlogContainer container;
-            if (mOAuthService != null)
-                container = mOAuthService.blogInfo(hostname, mConsumerToken.getToken());
-            else
-                container = mApiService.blogInfo(hostname, mConsumerToken.getToken());
+            ResponseContainer.BlogContainer container = mRequestCore.blogInfo(hostname);
 
             if (container != null && container.response != null) {
                 Bundle result = new Bundle();
@@ -2086,7 +2009,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param before   Retrieve posts liked before the specified timestamp
      * @param after    Retrieve posts liked after the specified timestamp
      * @return Intent to start {@link QueryService}
-     * <p/>
+     * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
      * <li>When using the offset parameter the maximum limit on the offset is 1000. If you would like to get more results than that use either before or after.
@@ -2108,7 +2031,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver receiver to get response data
      * @param limit    The number of results to return: 1–20, inclusive
      * @return Intent to start {@link QueryService}
-     * <p/>
+     * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
      * <li>When using the offset parameter the maximum limit on the offset is 1000. If you would like to get more results than that use either before or after.
@@ -2129,7 +2052,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param limit    The number of results to return: 1–20, inclusive
      * @param before   Retrieve posts liked before the specified timestamp
      * @return Intent to start {@link QueryService}
-     * <p/>
+     * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
      * <li>When using the offset parameter the maximum limit on the offset is 1000. If you would like to get more results than that use either before or after.
@@ -2150,7 +2073,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param limit    The number of results to return: 1–20, inclusive
      * @param after    Retrieve posts liked after the specified timestamp
      * @return Intent to start {@link QueryService}
-     * <p/>
+     * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
      * <li>When using the offset parameter the maximum limit on the offset is 1000. If you would like to get more results than that use either before or after.

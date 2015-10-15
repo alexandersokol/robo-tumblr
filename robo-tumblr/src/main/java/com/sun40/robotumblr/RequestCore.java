@@ -197,7 +197,7 @@ class RequestCore {
 
 
     ResponseContainer.BlogPostsContainer blogPostById(String hostname, long id, boolean reblogInfo, boolean notesInfo) throws RetrofitError {
-
+        hostname = Utils.checkHostname(hostname);
         ResponseContainer.BlogPostsContainer container;
         if (mOAuthService == null)
             container = mApiService.blogPosts(hostname, mConsumerToken.getToken(), id, reblogInfo, notesInfo);
@@ -209,7 +209,11 @@ class RequestCore {
 
 
     ResponseContainer.TaggedContainer tagged(String tag, long before, int limit, String filter) throws RetrofitError {
-        ResponseContainer.TaggedContainer container = null;
+
+        before = Utils.checkTimestamp(before);
+        limit = Utils.checkLimit(limit);
+
+        ResponseContainer.TaggedContainer container;
 
         if (mOAuthService != null) {
             container = mOAuthService.tagged(tag,

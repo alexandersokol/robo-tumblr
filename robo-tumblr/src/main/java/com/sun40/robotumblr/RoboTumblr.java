@@ -33,21 +33,10 @@ public final class RoboTumblr {
 
     private static volatile RoboTumblr sInstanse;
 
-    private ApiService mApiService;
-    private OAuthService mOAuthService;
-    private OAuthClient mOAuthClient;
-    private ConsumerToken mConsumerToken;
-    private AccessToken mAccessToken;
+    private RequestCore mRequestCore;
 
     private RoboTumblr() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiService.API_ENDPOINT)
-                .setLogLevel(RoboTumblr.LOG_LEVEL)
-                .build();
-
-        mApiService = restAdapter.create(ApiService.class);
     }
-
 
     public static RoboTumblr getInstanse(Context context) {
         synchronized (RoboTumblr.class) {
@@ -109,41 +98,10 @@ public final class RoboTumblr {
 
 
     private void update(Context context) {
-        if (mConsumerToken == null)
-            mConsumerToken = getConsumerToken(context);
+        if (mRequestCore == null)
+            mRequestCore = new RequestCore(getConsumerToken(context));
 
-        AccessToken savedToken = getAccessToken(context);
-        boolean needNewInstanse = false;
-
-        if (mAccessToken != null) {
-            if (savedToken == null)
-                mAccessToken = null;
-            else {
-                if (!mAccessToken.equals(savedToken)) {
-                    mAccessToken = savedToken;
-                    needNewInstanse = true;
-                }
-            }
-        } else if (savedToken != null) {
-            mAccessToken = savedToken;
-            needNewInstanse = true;
-        }
-
-        if (mAccessToken != null && needNewInstanse) {
-            mOAuthClient = new OAuthClient(mConsumerToken, mAccessToken);
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(ApiService.API_ENDPOINT)
-                    .setClient(mOAuthClient)
-                    .setLogLevel(RoboTumblr.LOG_LEVEL)
-                    .build();
-
-            mOAuthService = restAdapter.create(OAuthService.class);
-        }
-
-        if (mAccessToken == null) {
-            mOAuthClient = null;
-            mOAuthService = null;
-        }
+        mRequestCore.setAccessToken(getAccessToken(context));
     }
 
 
@@ -155,13 +113,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public Blog blogInfo(@NonNull String hostname) throws RetrofitError {
-        hostname = Utils.checkHostname(hostname);
-
-        ResponseContainer.BlogContainer container;
-        if (mOAuthService != null)
-            container = mOAuthService.blogInfo(hostname, mConsumerToken.getToken());
-        else
-            container = mApiService.blogInfo(hostname, mConsumerToken.getToken());
+        ResponseContainer.BlogContainer container = mRequestCore.blogInfo(hostname);
 
         if (container != null && container.response != null)
             return container.response.blog;
@@ -179,22 +131,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public String blogAvatar(@NonNull String hostname, @TumblrExtras.TumblrSize int size) throws RetrofitError {
-        hostname = Utils.checkHostname(hostname);
-
-        try {
-            if (size == TumblrExtras.Size.SIZE_UNDEFINED)
-                mApiService.blogAvatar(hostname);
-            else
-                mApiService.blogAvatar(hostname, size);
-
-        } catch (RetrofitError error) {
-            if (error.getResponse() != null && error.getResponse().getStatus() == Utils.STATUS_FOUND && !TextUtils.isEmpty(error.getResponse().getUrl()))
-                return error.getResponse().getUrl();
-            else
-                throw error;
-        }
-
-        return null;
+        return mRequestCore.blogAvatar(hostname, size);
     }
 
 
@@ -221,14 +158,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public List<Post> blogLikes(@NonNull String username, int limit, int offset) throws RetrofitError {
-        username = Utils.checkHostname(username);
-        limit = Utils.checkLimit(limit);
-        offset = Utils.checkOffset(offset);
-
-        ResponseContainer.BlogLikesContainer container = mApiService.blogLikes(username,
-                limit < 0 ? null : limit,
-                offset < 0 ? null : offset,
-                mConsumerToken.getToken());
+        ResponseContainer.BlogLikesContainer container = mRequestCore.blogLikes(username, limit, offset);
         return Utils.extractPosts(container.response.liked_posts);
     }
 
@@ -244,15 +174,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public List<Post> blogLikesBefore(@NonNull String username, int limit, long timestamp) throws RetrofitError {
-        username = Utils.checkHostname(username);
-        limit = Utils.checkLimit(limit);
-        timestamp = Utils.checkTimestamp(timestamp);
-
-        ResponseContainer.BlogLikesContainer container = mApiService.blogLikesBefore(username,
-                limit < 0 ? null : limit,
-                timestamp < 0 ? null : timestamp,
-                mConsumerToken.getToken());
-
+        ResponseContainer.BlogLikesContainer container = mRequestCore.blogLikesBefore(username, limit, timestamp);
         return Utils.extractPosts(container.response.liked_posts);
     }
 
@@ -268,15 +190,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public List<Post> blogLikesAfter(@NonNull String username, int limit, long timestamp) throws RetrofitError {
-        username = Utils.checkHostname(username);
-        limit = Utils.checkLimit(limit);
-        timestamp = Utils.checkTimestamp(timestamp);
-
-        ResponseContainer.BlogLikesContainer container = mApiService.blogLikesAfter(username,
-                limit < 0 ? null : limit,
-                timestamp < 0 ? null : timestamp,
-                mConsumerToken.getToken());
-
+        ResponseContainer.BlogLikesContainer container = mRequestCore.blogLikesAfter(username, limit, timestamp);
         return Utils.extractPosts(container.response.liked_posts);
     }
 
@@ -306,59 +220,7 @@ public final class RoboTumblr {
                                 boolean reblogInfo, boolean notesInfo,
                                 @Nullable @TumblrExtras.FilterType String filter) throws RetrofitError {
 
-        hostname = Utils.checkHostname(hostname);
-        limit = Utils.checkLimit(limit);
-        offset = Utils.checkOffset(offset);
-
-        ResponseContainer.BlogPostsContainer container;
-        if (TextUtils.isEmpty(type)) {
-            if (mOAuthService == null) {
-                container = mApiService.blogPosts(hostname,
-                        mConsumerToken.getToken(),
-                        null,
-                        tag,
-                        limit < 0 ? null : limit,
-                        offset < 0 ? null : offset,
-                        reblogInfo,
-                        notesInfo,
-                        TextUtils.isEmpty(filter) ? null : filter);
-            } else {
-                container = mOAuthService.blogPosts(hostname,
-                        mConsumerToken.getToken(),
-                        null,
-                        tag,
-                        limit < 0 ? null : limit,
-                        offset < 0 ? null : offset,
-                        reblogInfo,
-                        notesInfo,
-                        TextUtils.isEmpty(filter) ? null : filter);
-            }
-        } else {
-            if (mOAuthService == null) {
-                container = mApiService.blogPosts(hostname,
-                        type,
-                        mConsumerToken.getToken(),
-                        null,
-                        tag,
-                        limit < 0 ? null : limit,
-                        offset < 0 ? null : offset,
-                        reblogInfo,
-                        notesInfo,
-                        TextUtils.isEmpty(filter) ? null : filter);
-            } else {
-                container = mOAuthService.blogPosts(hostname,
-                        type,
-                        mConsumerToken.getToken(),
-                        null,
-                        tag,
-                        limit < 0 ? null : limit,
-                        offset < 0 ? null : offset,
-                        reblogInfo,
-                        notesInfo,
-                        TextUtils.isEmpty(filter) ? null : filter);
-            }
-        }
-
+        ResponseContainer.BlogPostsContainer container = mRequestCore.blogPosts(hostname, type, tag, limit, offset, reblogInfo, notesInfo, filter);
         if (container.response != null && container.response.blog != null && container.response.posts != null) {
             return Utils.extractPosts(container.response.posts);
         } else
@@ -408,12 +270,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public Post blogPostById(String hostname, long id, boolean reblogInfo, boolean notesInfo) throws RetrofitError {
-
-        ResponseContainer.BlogPostsContainer container;
-        if (mOAuthService == null)
-            container = mApiService.blogPosts(hostname, mConsumerToken.getToken(), id, reblogInfo, notesInfo);
-        else
-            container = mOAuthService.blogPosts(hostname, mConsumerToken.getToken(), id, reblogInfo, notesInfo);
+        ResponseContainer.BlogPostsContainer container = mRequestCore.blogPostById(hostname, id, reblogInfo, notesInfo);
 
         if (container.response != null && container.response.posts != null && container.response.blog != null) {
             List<Post> posts = Utils.extractPosts(container.response.posts);
@@ -439,22 +296,7 @@ public final class RoboTumblr {
      * @throws RetrofitError while error occurred
      */
     public List<Post> tagged(@NonNull String tag, long before, int limit, @Nullable @TumblrExtras.FilterType String filter) throws RetrofitError {
-
-        ResponseContainer.TaggedContainer container = null;
-
-        if (mOAuthService != null) {
-            container = mOAuthService.tagged(tag,
-                    before < 0 ? null : before,
-                    limit < 0 ? null : limit,
-                    filter,
-                    mConsumerToken.getToken());
-        } else {
-            container = mApiService.tagged(tag,
-                    before < 0 ? null : before,
-                    limit < 0 ? null : limit,
-                    filter,
-                    mConsumerToken.getToken());
-        }
+        ResponseContainer.TaggedContainer container = mRequestCore.tagged(tag, before, limit, filter);
 
         if (container != null && container.response != null) {
             return Utils.extractPosts(container.response);
