@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.token.AccessToken;
 import com.sun40.robotumblr.token.ConsumerToken;
 
@@ -65,7 +64,7 @@ class RequestCore {
     }
 
 
-    Blog blogInfo(@NonNull String hostname) throws RetrofitError {
+    ResponseContainer.BlogContainer blogInfo(@NonNull String hostname) throws RetrofitError {
         hostname = Utils.checkHostname(hostname);
 
         ResponseContainer.BlogContainer container;
@@ -74,10 +73,7 @@ class RequestCore {
         else
             container = mApiService.blogInfo(hostname, mConsumerToken.getToken());
 
-        if (container != null && container.response != null)
-            return container.response.blog;
-
-        return null;
+        return container;
     }
 
 
@@ -208,10 +204,28 @@ class RequestCore {
         else
             container = mOAuthService.blogPosts(hostname, mConsumerToken.getToken(), id, reblogInfo, notesInfo);
 
-        if (container.response != null && container.response.posts != null && container.response.blog != null)
-            return container;
+        return container;
+    }
 
-        return null;
+
+    ResponseContainer.TaggedContainer tagged(String tag, long before, int limit, String filter) throws RetrofitError {
+        ResponseContainer.TaggedContainer container = null;
+
+        if (mOAuthService != null) {
+            container = mOAuthService.tagged(tag,
+                    before < 0 ? null : before,
+                    limit < 0 ? null : limit,
+                    filter,
+                    mConsumerToken.getToken());
+        } else {
+            container = mApiService.tagged(tag,
+                    before < 0 ? null : before,
+                    limit < 0 ? null : limit,
+                    filter,
+                    mConsumerToken.getToken());
+        }
+
+        return container;
     }
 
 }
