@@ -1,18 +1,20 @@
 package com.robotumblr.sample.fragment;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.robotumblr.sample.R;
 import com.sun40.robotumblr.RoboTumblr;
 import com.sun40.robotumblr.TumblrExtras;
+import com.sun40.robotumblr.TumblrRequest;
 import com.sun40.robotumblr.model.Post;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import retrofit.RetrofitError;
 
@@ -45,29 +47,42 @@ public class BlogInfoSyncFragment extends BaseFragment {
 
     @Override
     protected void onRun() {
-        new BlogInfoAsync(this).execute("sun40");
+        Executor executor = AsyncTask.THREAD_POOL_EXECUTOR;
+        for (int i = 0; i < 5; i++) {
+            TumblrRequest tumblr = new TumblrRequest(RoboTumblr.getConsumerToken(getContext()), RoboTumblr.getAccessToken(getContext()));
+            new BlogInfoAsync(i, tumblr, this).executeOnExecutor(executor);
+        }
     }
 
 
-    private static class BlogInfoAsync extends AsyncTask<String, Void, String> {
+    private static class BlogInfoAsync extends AsyncTask<Void, Void, String> {
+
+        private static final String TAG = "AsyncExecution";
 
         private WeakReference<BlogInfoSyncFragment> reference;
+        private final int id;
+        private final TumblrRequest request;
 
-        BlogInfoAsync(BlogInfoSyncFragment fragment) {
+        BlogInfoAsync(int id, TumblrRequest request, BlogInfoSyncFragment fragment) {
             reference = new WeakReference<BlogInfoSyncFragment>(fragment);
+            this.id = id;
+            this.request = request;
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected void onPreExecute() {
+            Log.d(TAG, "onPreExecute " + id);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
             if (params == null)
                 return null;
 
             try {
-                String hostname = params[0];
+//                String hostname = params[0];
 
-                List<Post> list = RoboTumblr
-                        .getInstanse(reference.get().getContext())
-                        .tagged("lol", 0, 10, TumblrExtras.Filter.RAW);
+                List<Post> list = request.tagged("lol", 0, 10, TumblrExtras.Filter.RAW);
 
                 StringBuffer b = new StringBuffer();
                 for (Post post : list) {
@@ -83,11 +98,7 @@ public class BlogInfoSyncFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(String str) {
-            if (str != null && reference.get() != null) {
-                reference.get().mContentText.setText(str);
-            } else {
-                Toast.makeText(reference.get().getContext(), "Failed", Toast.LENGTH_SHORT).show();
-            }
+            Log.d(TAG, "onPostExecute " + id);
         }
     }
 }
