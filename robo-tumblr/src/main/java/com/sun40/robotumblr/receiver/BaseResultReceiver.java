@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 
 import java.util.Stack;
 
@@ -44,22 +44,22 @@ abstract class BaseResultReceiver<T extends OnTokenInvalidatedListener> extends 
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         if (mListener != null) {
             switch (resultCode) {
-                case QueryService.CODE_START:
+                case TumblrService.CODE_START:
                     onStart(resultData);
                     break;
-                case QueryService.CODE_PROGRESS:
+                case TumblrService.CODE_PROGRESS:
                     onProgress(resultData);
                     break;
-                case QueryService.CODE_ERROR:
+                case TumblrService.CODE_ERROR:
                     onError(resultData);
                     break;
-                case QueryService.CODE_SUCCESS:
+                case TumblrService.CODE_SUCCESS:
                     onFinish(resultData);
                     break;
-                case QueryService.CODE_TOKEN_EXPIRED:
+                case TumblrService.CODE_TOKEN_EXPIRED:
                     mListener.onTokenInvalidated();
                     break;
-                case QueryService.CODE_NOT_AUTHORIZED:
+                case TumblrService.CODE_NOT_AUTHORIZED:
                     mListener.onUserNotAuthorized();
                     break;
             }

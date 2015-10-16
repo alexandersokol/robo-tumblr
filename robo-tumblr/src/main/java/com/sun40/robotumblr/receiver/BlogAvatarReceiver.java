@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 
 /**
@@ -31,15 +31,15 @@ public class BlogAvatarReceiver extends BaseResultReceiver<BlogAvatarReceiver.Bl
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogAvatarFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        String avatarUrl = data.getString(QueryService.KEY_BLOG_AVATAR);
+        String avatarUrl = data.getString(TumblrService.KEY_BLOG_AVATAR);
         if (!TextUtils.isEmpty(avatarUrl)) {
-            int size = data.getInt(QueryService.KEY_SIZE, TumblrExtras.Size.SIZE_64);
+            int size = data.getInt(TumblrService.KEY_SIZE, TumblrExtras.Size.SIZE_64);
             if(size == -1)
                 size = TumblrExtras.Size.SIZE_64;
             getListener().onBlogAvatarSuccess(avatarUrl, size);

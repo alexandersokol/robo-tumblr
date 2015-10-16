@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robotumblr.sample.R;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.SimpleBlog;
 import com.sun40.robotumblr.receiver.UserFollowingBlogsReceiver;
 
@@ -86,7 +86,7 @@ public class UserFollowingsFragment extends BaseFragment implements UserFollowin
             return;
         }
 
-        getActivity().startService(QueryService.userFollowingBlogs(getActivity(), mFollowingReceiver, limit, offset));
+        getActivity().startService(TumblrService.userFollowingBlogs(getActivity(), mFollowingReceiver, limit, offset));
         showDialog();
     }
 

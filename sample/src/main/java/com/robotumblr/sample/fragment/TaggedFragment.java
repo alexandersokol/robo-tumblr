@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robotumblr.sample.R;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.receiver.TaggedReceiver;
@@ -96,7 +96,7 @@ public class TaggedFragment extends BaseFragment implements TaggedReceiver.Tagge
             return;
         }
 
-        getActivity().startService(QueryService.tagged(getActivity(), mTaggedReceiver, tag, before, limit, TumblrExtras.Filter.TEXT));
+        getActivity().startService(TumblrService.tagged(getActivity(), mTaggedReceiver, tag, before, limit, TumblrExtras.Filter.TEXT));
         showDialog();
     }
 

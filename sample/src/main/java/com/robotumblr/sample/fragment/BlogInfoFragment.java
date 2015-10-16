@@ -16,7 +16,7 @@ import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.receiver.BlogInfoReceiver;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 
 
@@ -75,7 +75,7 @@ public class BlogInfoFragment extends BaseFragment implements BlogInfoReceiver.O
     @Override
     protected void onRun() {
         String hostname = mHostNameEdit.getText().toString();
-        getActivity().startService(QueryService.blogInfo(getActivity(), mBlogInfoReceiver, hostname));
+        getActivity().startService(TumblrService.blogInfo(getActivity(), mBlogInfoReceiver, hostname));
         SimpleDialog.show(false, false, false, getFragmentManager());
     }
 

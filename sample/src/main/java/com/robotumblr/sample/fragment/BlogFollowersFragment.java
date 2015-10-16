@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.SimpleUser;
 import com.sun40.robotumblr.model.User;
@@ -121,7 +121,7 @@ public class BlogFollowersFragment extends BaseFragment implements BlogFollowers
                 return;
             }
 
-            getActivity().startService(QueryService.getBlogFollowers(getActivity(), mBlogFollowersReceiver, hostname, limit, offset));
+            getActivity().startService(TumblrService.getBlogFollowers(getActivity(), mBlogFollowersReceiver, hostname, limit, offset));
             SimpleDialog.show(false, false, false, getFragmentManager());
         }
     }

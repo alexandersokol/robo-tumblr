@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 
 /**
  * Created by Alexander Sokol
@@ -29,13 +29,13 @@ public class BlogPostDeleteReceiver extends BaseResultReceiver<BlogPostDeleteRec
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogPostDeleteFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        long id = data.getLong(QueryService.KEY_ID, 0);
+        long id = data.getLong(TumblrService.KEY_ID, 0);
         if (id != 0)
             getListener().onBlogPostDeleteSuccess(id);
         else

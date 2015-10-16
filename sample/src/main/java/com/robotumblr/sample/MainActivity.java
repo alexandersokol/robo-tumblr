@@ -47,7 +47,7 @@ import com.robotumblr.sample.fragment.UserLikeFragment;
 import com.robotumblr.sample.fragment.UserLikesFragment;
 import com.robotumblr.sample.util.StorageUtils;
 import com.sun40.robotumblr.AuthActivity;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.RoboTumblr;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.receiver.AccessTokenReceiver;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String verifier = data.getStringExtra(AuthActivity.KEY_AUTH_VERIFIER);
             RequestToken requestToken = data.getParcelableExtra(AuthActivity.KEY_REQUEST_TOKEN);
             SimpleDialog.show(false, false, false, getSupportFragmentManager());
-            startService(QueryService.getOauthAccessToken(this, mAccessTokenReceiver, requestToken, verifier));
+            startService(TumblrService.getOauthAccessToken(this, mAccessTokenReceiver, requestToken, verifier));
         }
     }
 
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setUpCurrentUser();
                 } else {
                     SimpleDialog.show(false, false, false, getSupportFragmentManager());
-                    startService(QueryService.getOAuthRequestToken(this, mRequestTokenReceiver));
+                    startService(TumblrService.getOAuthRequestToken(this, mRequestTokenReceiver));
                 }
                 return;
             }
@@ -420,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onAccessTokenSuccess() {
         Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show();
-        startService(QueryService.userInfo(this, mUserInfoReceiver));
+        startService(TumblrService.userInfo(this, mUserInfoReceiver));
     }
 
     @Override

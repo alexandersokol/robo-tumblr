@@ -16,9 +16,9 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.receiver.BlogLikesReceiver;
-import com.sun40.robotumblr.QueryService;
 import com.sun40.robotumblr.model.Post;
 
 import java.util.ArrayList;
@@ -124,13 +124,13 @@ public class BlogLikesFragment extends BaseFragment implements BlogLikesReceiver
 
         if (mOffsetSpinner.getSelectedItemPosition() == 0) {
             int offset = TextUtils.isEmpty(offsetStr) ? 0 : Integer.parseInt(offsetStr);
-            getActivity().startService(QueryService.blogLikes(getContext(), mBlogLikesReceiver, hostname, limit, offset));
+            getActivity().startService(TumblrService.blogLikes(getContext(), mBlogLikesReceiver, hostname, limit, offset));
         } else if (mOffsetSpinner.getSelectedItemPosition() == 1) {
             long timestamp = Long.parseLong(offsetStr);
-            getActivity().startService(QueryService.blogLikesBefore(getContext(), mBlogLikesReceiver, hostname, limit, timestamp));
+            getActivity().startService(TumblrService.blogLikesBefore(getContext(), mBlogLikesReceiver, hostname, limit, timestamp));
         } else {
             long timestamp = Long.parseLong(offsetStr);
-            getActivity().startService(QueryService.blogLikesAfter(getContext(), mBlogLikesReceiver, hostname, limit, timestamp));
+            getActivity().startService(TumblrService.blogLikesAfter(getContext(), mBlogLikesReceiver, hostname, limit, timestamp));
         }
         SimpleDialog.show(false, false, false, getFragmentManager());
     }

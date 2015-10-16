@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Tag;
@@ -35,13 +35,13 @@ public class SearchReceiver extends BaseResultReceiver<SearchReceiver.SearchList
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onSearchFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onSearchFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        Blog[] blogs = (Blog[]) data.getParcelableArray(QueryService.KEY_BLOG);
-        Tag[] tags = (Tag[]) data.getParcelableArray(QueryService.KEY_TAG);
+        Blog[] blogs = (Blog[]) data.getParcelableArray(TumblrService.KEY_BLOG);
+        Tag[] tags = (Tag[]) data.getParcelableArray(TumblrService.KEY_TAG);
         List<Blog> blogList;
         if (blogs != null)
             blogList = Arrays.asList(blogs);
@@ -54,7 +54,7 @@ public class SearchReceiver extends BaseResultReceiver<SearchReceiver.SearchList
         else
             tagList = new ArrayList<>();
 
-        String searchType = data.getString(QueryService.KEY_SEARCH_TYPE);
+        String searchType = data.getString(TumblrService.KEY_SEARCH_TYPE);
         if (searchType != null && (!searchType.equals(TumblrExtras.Search.BLOGS) || !searchType.equals(TumblrExtras.Search.TAGS))) {
             searchType = TumblrExtras.Search.ANY;
         }

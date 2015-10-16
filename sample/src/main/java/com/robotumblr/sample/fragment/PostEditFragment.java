@@ -16,9 +16,8 @@ import com.robotumblr.sample.MainActivity;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
-import com.sun40.robotumblr.model.AnswerPost;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.User;
@@ -127,7 +126,7 @@ public class PostEditFragment extends BaseFragment implements BlogPostsReceiver.
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mCurrentHostname = mHostNames.get(position);
-        getActivity().startService(QueryService.blogPosts(getContext(), mBlogPostsReceiver, mCurrentHostname, 0, 20));
+        getActivity().startService(TumblrService.blogPosts(getContext(), mBlogPostsReceiver, mCurrentHostname, 0, 20));
     }
 
     @Override

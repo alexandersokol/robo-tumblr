@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 
 /**
  * Created by Alexander Sokol
@@ -29,7 +29,7 @@ public class AccessTokenReceiver extends BaseResultReceiver<AccessTokenReceiver.
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onAccessTokenFail(error);
     }
 

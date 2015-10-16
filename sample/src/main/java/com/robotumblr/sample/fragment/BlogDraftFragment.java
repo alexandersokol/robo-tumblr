@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
@@ -141,7 +141,7 @@ public class BlogDraftFragment extends BaseFragment implements BlogDraftReceiver
         String hostname = mHostnames.get(mHostnameSpinner.getSelectedItemPosition());
         long id = mIdList.get(mBeforeSpinner.getSelectedItemPosition());
         String filter = mFilterTypeSpinner.getSelectedItemPosition() == 0 ? null : mFilterTypes.get(mFilterTypeSpinner.getSelectedItemPosition());
-        getActivity().startService(QueryService.blogDrafts(getActivity(), mBlogDraftReceiver, hostname, limit, id, filter));
+        getActivity().startService(TumblrService.blogDrafts(getActivity(), mBlogDraftReceiver, hostname, limit, id, filter));
         showDialog();
     }
 

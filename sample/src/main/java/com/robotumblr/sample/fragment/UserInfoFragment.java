@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.receiver.UserInfoReceiver;
 
@@ -60,7 +60,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoReceiver.U
 
     @Override
     protected void onRun() {
-        getActivity().startService(QueryService.userInfo(getActivity(), mUserInfoReceiver));
+        getActivity().startService(TumblrService.userInfo(getActivity(), mUserInfoReceiver));
         showDialog();
     }
 

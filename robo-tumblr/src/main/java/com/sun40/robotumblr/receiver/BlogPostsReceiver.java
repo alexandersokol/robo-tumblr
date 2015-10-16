@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
-import com.sun40.robotumblr.model.RawPost;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,26 +34,26 @@ public class BlogPostsReceiver extends BaseResultReceiver<BlogPostsReceiver.Blog
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogPostsFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        Blog blog = data.getParcelable(QueryService.KEY_BLOG);
-        ArrayList<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        Blog blog = data.getParcelable(TumblrService.KEY_BLOG);
+        ArrayList<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if(posts == null){
             getListener().onBlogPostsFail(null);
             return;
         }
-        int limit = data.getInt(QueryService.KEY_LIMIT);
-        int offset = data.getInt(QueryService.KEY_OFFSET);
-        String type = data.getString(QueryService.KEY_TYPE);
-        String tag = data.getString(QueryService.KEY_TAG);
-        boolean reblogInfo = data.getBoolean(QueryService.KEY_REBLOG_INFO);
-        boolean notesInfo = data.getBoolean(QueryService.KEY_NOTES_INFO);
-        String filter = data.getString(QueryService.KEY_FILTER);
-        int total = data.getInt(QueryService.KEY_TOTAL, 0);
+        int limit = data.getInt(TumblrService.KEY_LIMIT);
+        int offset = data.getInt(TumblrService.KEY_OFFSET);
+        String type = data.getString(TumblrService.KEY_TYPE);
+        String tag = data.getString(TumblrService.KEY_TAG);
+        boolean reblogInfo = data.getBoolean(TumblrService.KEY_REBLOG_INFO);
+        boolean notesInfo = data.getBoolean(TumblrService.KEY_NOTES_INFO);
+        String filter = data.getString(TumblrService.KEY_FILTER);
+        int total = data.getInt(TumblrService.KEY_TOTAL, 0);
         getListener().onBlogPostsSuccess(blog, posts, limit, offset, tag, type, reblogInfo, notesInfo, filter, total);
     }
 

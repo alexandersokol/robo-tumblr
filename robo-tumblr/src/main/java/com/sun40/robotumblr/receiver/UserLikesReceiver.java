@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Post;
-import com.sun40.robotumblr.model.RawPost;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,18 +31,18 @@ public class UserLikesReceiver extends BaseResultReceiver<UserLikesReceiver.User
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onUserLikesFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onUserLikesFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts != null) {
-            int total = data.getInt(QueryService.KEY_TOTAL);
-            int limit = data.getInt(QueryService.KEY_LIMIT);
-            int offset = data.getInt(QueryService.KEY_OFFSET);
-            long before = data.getLong(QueryService.KEY_BEFORE);
-            long after = data.getLong(QueryService.KEY_AFTER);
+            int total = data.getInt(TumblrService.KEY_TOTAL);
+            int limit = data.getInt(TumblrService.KEY_LIMIT);
+            int offset = data.getInt(TumblrService.KEY_OFFSET);
+            long before = data.getLong(TumblrService.KEY_BEFORE);
+            long after = data.getLong(TumblrService.KEY_AFTER);
             getListener().onUserLikesSuccess(posts, total, limit, offset, before, after);
 
         } else

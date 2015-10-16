@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.User;
 
 /**
@@ -29,12 +29,12 @@ public class UserInfoReceiver extends BaseResultReceiver<UserInfoReceiver.UserIn
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onUserInfoFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onUserInfoFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        User user = data.getParcelable(QueryService.KEY_USER);
+        User user = data.getParcelable(TumblrService.KEY_USER);
         if (user != null)
             getListener().onUserInfoSuccess(user);
         else

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robotumblr.sample.R;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.receiver.BlogInfoReceiver;
 import com.sun40.robotumblr.receiver.UserBlogFollowReceiver;
@@ -70,7 +70,7 @@ public class UserFollowFragment extends BaseFragment implements UserBlogFollowRe
         blogFollowText.setText(mFollow ? R.string.blog_to_follow : R.string.blog_to_unfollow);
         mBlogUrlText = (TextView) rootView.findViewById(R.id.blog_url_tv);
 
-        getActivity().startService(QueryService.blogInfo(getActivity(), mBlogInfoReceiver, getString(R.string.developers_hostname)));
+        getActivity().startService(TumblrService.blogInfo(getActivity(), mBlogInfoReceiver, getString(R.string.developers_hostname)));
         showDialog();
         return rootView;
     }
@@ -95,9 +95,9 @@ public class UserFollowFragment extends BaseFragment implements UserBlogFollowRe
             Toast.makeText(getContext(), "Blog is null", Toast.LENGTH_SHORT).show();
         } else {
             if (mFollow)
-                getActivity().startService(QueryService.userFollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
+                getActivity().startService(TumblrService.userFollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
             else
-                getActivity().startService(QueryService.userUnfollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
+                getActivity().startService(TumblrService.userUnfollowBlog(getActivity(), mUserFollowReceiver, mBlog.url));
             showDialog();
         }
     }

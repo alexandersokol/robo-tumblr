@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
-import com.sun40.robotumblr.model.RawPost;
 
 import java.util.List;
 
@@ -34,14 +33,14 @@ public class BlogPostByIdReceiver extends BaseResultReceiver<BlogPostByIdReceive
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogPostByIdFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        Blog blog = data.getParcelable(QueryService.KEY_BLOG);
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        Blog blog = data.getParcelable(TumblrService.KEY_BLOG);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts != null && !posts.isEmpty())
             getListener().onBlogPostByIdSuccess(blog, posts.get(0));
         else

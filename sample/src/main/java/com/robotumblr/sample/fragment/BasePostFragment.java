@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
@@ -183,9 +182,9 @@ abstract class BasePostFragment extends BaseFragment implements BlogNewPostRecei
                     //noinspection ResourceType
                     creator.setPostState(state);
                     if(isInEditMode())
-                        getActivity().startService(QueryService.editPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
+                        getActivity().startService(TumblrService.editPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
                     else
-                        getActivity().startService(QueryService.newPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
+                        getActivity().startService(TumblrService.newPost(getActivity(), mBlogNewPostReceiver, getHostname(), creator));
                     switch (creator.getPostType()) {
                         case TumblrExtras.Post.VIDEO:
                         case TumblrExtras.Post.PHOTO:

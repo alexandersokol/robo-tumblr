@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Post;
 
 import java.util.List;
@@ -31,17 +31,17 @@ public class TaggedReceiver extends BaseResultReceiver<TaggedReceiver.TaggedList
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onTaggedFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onTaggedFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts != null) {
-            String tag = data.getString(QueryService.KEY_TAG);
-            long before = data.getLong(QueryService.KEY_BEFORE, -1);
-            int limit = data.getInt(QueryService.KEY_LIMIT, -1);
-            String filter = data.getString(QueryService.KEY_FILTER);
+            String tag = data.getString(TumblrService.KEY_TAG);
+            long before = data.getLong(TumblrService.KEY_BEFORE, -1);
+            int limit = data.getInt(TumblrService.KEY_LIMIT, -1);
+            String filter = data.getString(TumblrService.KEY_FILTER);
             getListener().onTaggedSuccess(posts, tag, before, limit, filter);
         } else
             getListener().onTaggedFail(null);

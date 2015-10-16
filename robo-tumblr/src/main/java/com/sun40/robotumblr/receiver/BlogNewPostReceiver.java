@@ -2,10 +2,9 @@ package com.sun40.robotumblr.receiver;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 
 /**
  * Created by Alexander Sokol
@@ -24,19 +23,19 @@ public class BlogNewPostReceiver extends BaseResultReceiver<BlogNewPostReceiver.
 
     @Override
     protected void onProgress(Bundle data) {
-        int value = data.getInt(QueryService.KEY_PROGRESS, 0);
+        int value = data.getInt(TumblrService.KEY_PROGRESS, 0);
         getListener().onBlogPostProgress(value);
     }
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogPostFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        long id = data.getLong(QueryService.KEY_ID, 0);
+        long id = data.getLong(TumblrService.KEY_ID, 0);
         if(id != 0)
             getListener().onBlogPostSuccess(id);
         else

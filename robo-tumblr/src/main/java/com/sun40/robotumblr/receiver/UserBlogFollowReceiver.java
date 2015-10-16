@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 
 /**
  * Created by Alexander Sokol
@@ -28,13 +28,13 @@ public class UserBlogFollowReceiver extends BaseResultReceiver<UserBlogFollowRec
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onUserBlogFollowFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onUserBlogFollowFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        boolean follow = data.getBoolean(QueryService.KEY_FOLLOW);
-        String url = data.getString(QueryService.KEY_URL);
+        boolean follow = data.getBoolean(TumblrService.KEY_FOLLOW);
+        String url = data.getString(TumblrService.KEY_URL);
         getListener().onUserBlogFollowSuccess(follow, url);
     }
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.SimpleUser;
 
 import java.util.Arrays;
@@ -32,16 +32,16 @@ public class BlogFollowersReceiver extends BaseResultReceiver<BlogFollowersRecei
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogFollowersFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        int limit = data.getInt(QueryService.KEY_LIMIT);
-        int offset = data.getInt(QueryService.KEY_OFFSET);
-        int totalFollowers = data.getInt(QueryService.KEY_TOTAL);
-        SimpleUser[] users = (SimpleUser[]) data.getParcelableArray(QueryService.KEY_USERS);
+        int limit = data.getInt(TumblrService.KEY_LIMIT);
+        int offset = data.getInt(TumblrService.KEY_OFFSET);
+        int totalFollowers = data.getInt(TumblrService.KEY_TOTAL);
+        SimpleUser[] users = (SimpleUser[]) data.getParcelableArray(TumblrService.KEY_USERS);
         if(users != null) {
             List<SimpleUser> userList = Arrays.asList(users);
             getListener().onBlogFollowersSuccess(userList, totalFollowers, limit, offset);

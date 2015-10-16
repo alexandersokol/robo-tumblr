@@ -9,7 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.robotumblr.sample.R;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.receiver.BlogPostsReceiver;
@@ -76,7 +76,7 @@ public class UserLikeFragment extends BaseFragment implements BlogPostsReceiver.
 
         mIdSpinner = (Spinner) rootView.findViewById(R.id.post_spinner);
 
-        getActivity().startService(QueryService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
+        getActivity().startService(TumblrService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
         showDialog();
         return rootView;
     }
@@ -98,9 +98,9 @@ public class UserLikeFragment extends BaseFragment implements BlogPostsReceiver.
         } else {
             Post post = mPostList.get(mIdSpinner.getSelectedItemPosition());
             if (mLike)
-                getActivity().startService(QueryService.userLikePost(getActivity(), mLikesReceiver, post.getId(), post.getReblogKey()));
+                getActivity().startService(TumblrService.userLikePost(getActivity(), mLikesReceiver, post.getId(), post.getReblogKey()));
             else
-                getActivity().startService(QueryService.userUnlikePost(getActivity(), mLikesReceiver, post.getId(), post.getReblogKey()));
+                getActivity().startService(TumblrService.userUnlikePost(getActivity(), mLikesReceiver, post.getId(), post.getReblogKey()));
             showDialog();
         }
     }

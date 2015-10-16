@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Post;
-import com.sun40.robotumblr.model.RawPost;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,19 +32,19 @@ public class BlogQueueReceiver extends BaseResultReceiver<BlogQueueReceiver.Blog
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogQueuedFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts == null) {
             getListener().onBlogQueuedFail(null);
         } else {
-            int offset = data.getInt(QueryService.KEY_OFFSET);
-            int limit = data.getInt(QueryService.KEY_LIMIT);
-            String filter = data.getString(QueryService.KEY_FILTER);
+            int offset = data.getInt(TumblrService.KEY_OFFSET);
+            int limit = data.getInt(TumblrService.KEY_LIMIT);
+            String filter = data.getString(TumblrService.KEY_FILTER);
             getListener().onBlogQueuedSuccess(posts, limit, offset, filter);
         }
     }

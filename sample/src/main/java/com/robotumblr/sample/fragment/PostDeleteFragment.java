@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.User;
@@ -89,7 +89,7 @@ public class PostDeleteFragment extends BaseFragment implements BlogPostsReceive
         mHosnamesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getActivity().startService(QueryService.blogPosts(getActivity(), mBlogPostsReceiver, mHostnames.get(position), 20, 0));
+                getActivity().startService(TumblrService.blogPosts(getActivity(), mBlogPostsReceiver, mHostnames.get(position), 20, 0));
             }
 
             @Override
@@ -120,7 +120,7 @@ public class PostDeleteFragment extends BaseFragment implements BlogPostsReceive
 
         String hostname = mHostnames.get(mHosnamesSpinner.getSelectedItemPosition());
         Post post = mPosts.get(mPostSpinner.getSelectedItemPosition());
-        getActivity().startService(QueryService.deletePost(getActivity(), mBlogPostDeleteReceiver, hostname, post.getId()));
+        getActivity().startService(TumblrService.deletePost(getActivity(), mBlogPostDeleteReceiver, hostname, post.getId()));
     }
 
     @Override

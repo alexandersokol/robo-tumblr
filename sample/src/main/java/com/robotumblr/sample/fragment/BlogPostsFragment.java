@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
@@ -158,7 +158,7 @@ public class BlogPostsFragment extends BaseFragment implements BlogPostsReceiver
         String tag = TextUtils.isEmpty(mTagEdit.getText().toString()) ? null : mTagEdit.getText().toString();
         String type = mPostTypeSpinner.getSelectedItemPosition() == 0 ? null : mPostTypes.get(mPostTypeSpinner.getSelectedItemPosition());
         String filter = mFilterTypeSpinner.getSelectedItemPosition() == 0 ? null : mFilterTypes.get(mFilterTypeSpinner.getSelectedItemPosition());
-        getActivity().startService(QueryService.blogPosts(getActivity(), mBlogPostsReceiver, hostname, type, tag, limit, offset, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked(), filter));
+        getActivity().startService(TumblrService.blogPosts(getActivity(), mBlogPostsReceiver, hostname, type, tag, limit, offset, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked(), filter));
         showDialog();
     }
 

@@ -25,7 +25,7 @@
 
         <activity android:name="com.sun40.robotumblr.AuthActivity"/>
 
-        <service android:name="com.sun40.robotumblr.QueryService" android:exported="false"/>
+        <service android:name="com.sun40.robotumblr.TumblrService" android:exported="false"/>
 
     </application>
 

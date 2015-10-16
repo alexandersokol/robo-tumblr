@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Post;
-import com.sun40.robotumblr.model.RawPost;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,19 +32,19 @@ public class UserDashboardReceiver extends BaseResultReceiver<UserDashboardRecei
 
     @Override
     protected void onError(Bundle data) {
-        getListener().onUserDashboardFail(data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR));
+        getListener().onUserDashboardFail(data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR));
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts != null) {
-            int limit = data.getInt(QueryService.KEY_LIMIT);
-            int offset = data.getInt(QueryService.KEY_OFFSET);
-            String type = data.getString(QueryService.KEY_TYPE);
-            long sinceId = data.getLong(QueryService.KEY_ID);
-            boolean reblogInfo = data.getBoolean(QueryService.KEY_REBLOG_INFO);
-            boolean notesInfo = data.getBoolean(QueryService.KEY_NOTES_INFO);
+            int limit = data.getInt(TumblrService.KEY_LIMIT);
+            int offset = data.getInt(TumblrService.KEY_OFFSET);
+            String type = data.getString(TumblrService.KEY_TYPE);
+            long sinceId = data.getLong(TumblrService.KEY_ID);
+            boolean reblogInfo = data.getBoolean(TumblrService.KEY_REBLOG_INFO);
+            boolean notesInfo = data.getBoolean(TumblrService.KEY_NOTES_INFO);
             getListener().onUserDashboardSuccess(posts, limit, offset, type, sinceId, reblogInfo, notesInfo);
         } else
             getListener().onUserDashboardFail(null);

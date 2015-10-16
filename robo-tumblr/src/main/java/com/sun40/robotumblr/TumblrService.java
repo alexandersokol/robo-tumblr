@@ -62,9 +62,9 @@ import retrofit.mime.TypedFile;
  * Created by Alexander Sokol
  * on 25.08.15 15:38.
  */
-public class QueryService extends IntentService implements CountingTypedFile.FileProgressListener {
+public class TumblrService extends IntentService implements CountingTypedFile.FileProgressListener {
 
-    private static final String TAG = "QueryService";
+    private static final String TAG = "TumblrService";
 
     private static final String NOT_AUTHORIZED_CODE = "401";
 
@@ -145,7 +145,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
     private long mSummaryUploadSize;
     private long mSummaryTransferredSize;
 
-    public QueryService() {
+    public TumblrService() {
         super(TAG);
     }
 
@@ -1419,7 +1419,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
 
 
     private static Intent getBaseIntent(@NonNull Context context, ResultReceiver receiver, @NonNull String action) {
-        Intent intent = new Intent(action, null, context, QueryService.class);
+        Intent intent = new Intent(action, null, context, TumblrService.class);
         intent.putExtra(KEY_RECEIVER, receiver);
         return intent;
     }
@@ -1429,7 +1429,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *
      * @param context  package context
      * @param receiver receiver to get data
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent getOAuthRequestToken(@NonNull Context context, RequestTokenReceiver receiver) {
         return getBaseIntent(context, receiver, ACTION_OAUTH_REQUEST_TOKEN);
@@ -1440,9 +1440,9 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *
      * @param context       package context
      * @param receiver      receiver to get data
-     * @param requestToken  a request token got with {@link QueryService#getOAuthRequestToken(Context, RequestTokenReceiver)}
+     * @param requestToken  a request token got with {@link TumblrService#getOAuthRequestToken(Context, RequestTokenReceiver)}
      * @param oauthVerifier string verifier parsed from authorization url response
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent getOauthAccessToken(@NonNull Context context, AccessTokenReceiver receiver, RequestToken requestToken, String oauthVerifier) {
         Intent intent = getBaseIntent(context, receiver, ACTION_OAUTH_ACCESS_TOKEN);
@@ -1458,7 +1458,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param context  package context
      * @param receiver receiver to get response data
      * @param hostname host name like temp.tumblr.com
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogInfo(@NonNull Context context, BlogInfoReceiver receiver, String hostname) {
         Intent intent = getBaseIntent(context, receiver, ACTION_BLOG_INFO);
@@ -1474,7 +1474,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver receiver to get response data
      * @param hostname host name like temp.tumblr.com
      * @param size     avatar size of {@link com.sun40.robotumblr.TumblrExtras.TumblrSize}, by default use {@link com.sun40.robotumblr.TumblrExtras.Size#SIZE_UNDEFINED} which returns 64x64 avatar
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogAvatar(@NonNull Context context, BlogAvatarReceiver receiver, String hostname, @TumblrExtras.TumblrSize int size) {
         Intent intent = getBaseIntent(context, receiver, ACTION_BLOG_AVATAR);
@@ -1489,7 +1489,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param context  package context
      * @param receiver receiver to get response data
      * @param hostname host name like temp.tumblr.com
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogAvatar(@NonNull Context context, BlogAvatarReceiver receiver, String hostname) {
         return blogAvatar(context, receiver, checkHostname(hostname), TumblrExtras.Size.SIZE_UNDEFINED);
@@ -1505,7 +1505,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param username      host name like temp.tumblr.com, were user name equals main user blog name
      * @param limit         likes limit per page
      * @param offset        likes offset from start
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogLikes(@NonNull Context context, BlogLikesReceiver likesReceiver, String username, int limit, int offset) {
         Intent intent = getBaseIntent(context, likesReceiver, ACTION_BLOG_LIKES);
@@ -1525,7 +1525,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param username      user name like temp.tumblr.com, were user name equals main user blog name
      * @param limit         likes limit per page
      * @param timestamp     unix epoch time stamp
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogLikesBefore(@NonNull Context context, BlogLikesReceiver likesReceiver, String username, int limit, long timestamp) {
         Intent intent = getBaseIntent(context, likesReceiver, ACTION_BLOG_LIKES_BEFORE);
@@ -1544,7 +1544,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param username      host name like temp.tumblr.com, were user name equals main user blog name
      * @param limit         likes limit per page
      * @param timestamp     unix epoch time stamp
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogLikesAfter(@NonNull Context context, BlogLikesReceiver likesReceiver, String username, int limit, long timestamp) {
         Intent intent = getBaseIntent(context, likesReceiver, ACTION_BLOG_LIKES_AFTER);
@@ -1563,7 +1563,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param ownHostname user's host name like temp.tumblr.com
      * @param limit       followers limit per page
      * @param offset      offset from start
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent getBlogFollowers(@NonNull Context context, BlogFollowersReceiver receiver, String ownHostname, int limit, int offset) {
         Intent intent = getBaseIntent(context, receiver, ACTION_BLOG_FOLLOWERS);
@@ -1592,7 +1592,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                   {@link com.sun40.robotumblr.TumblrExtras.Filter#TEXT} – Plain text, no HTML
      *                   {@link com.sun40.robotumblr.TumblrExtras.Filter#RAW} – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
      *                   <i>Default null - HTML</i>
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPosts(@NonNull Context context,
                                    @NonNull BlogPostsReceiver receiver,
@@ -1633,7 +1633,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                 {@link com.sun40.robotumblr.TumblrExtras.Filter#TEXT} – Plain text, no HTML
      *                 {@link com.sun40.robotumblr.TumblrExtras.Filter#RAW} – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
      *                 <i>Default null - HTML</i>
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPosts(@NonNull Context context,
                                    @NonNull BlogPostsReceiver receiver,
@@ -1668,7 +1668,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param tag      Limits the response to posts with the specified tag may be null
      * @param limit    The number of posts to return: 1–20, inclusive or -1 to use default value 20
      * @param offset   RawPost number to start at or -1 to use default value 0
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPosts(@NonNull Context context,
                                    @NonNull BlogPostsReceiver receiver,
@@ -1700,7 +1700,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                 {@link com.sun40.robotumblr.TumblrExtras.Post#PHOTO}, {@link com.sun40.robotumblr.TumblrExtras.Post#CHAT} or null to get all posts
      * @param limit    The number of posts to return: 1–20, inclusive or -1 to use default value 20
      * @param offset   RawPost number to start at or -1 to use default value 0
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPosts(@NonNull Context context,
                                    @NonNull BlogPostsReceiver receiver,
@@ -1726,7 +1726,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param hostname blog hostname like temp.tumblr.com
      * @param limit    The number of posts to return: 1–20, inclusive or -1 to use default value 20
      * @param offset   RawPost number to start at or -1 to use default value 0
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPosts(@NonNull Context context,
                                    @NonNull BlogPostsReceiver receiver,
@@ -1752,7 +1752,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param id             post id
      * @param reblogInfo     Indicates whether to return reblog information (specify true or false). Returns the various reblogged_ fields. <i>default: false</i>
      * @param notesInfo      Indicates whether to return notes information (specify true or false). Returns note count and note metadata. <i>default: false<i/>
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPostById(@NonNull Context context, BlogPostByIdReceiver resultReceiver, String hostname, long id, boolean reblogInfo, boolean notesInfo) {
         Intent intent = getBaseIntent(context, resultReceiver, ACTION_BLOG_POST_BY_ID);
@@ -1776,7 +1776,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                       {@link com.sun40.robotumblr.TumblrExtras.Filter#TEXT} – Plain text, no HTML
      *                       {@link com.sun40.robotumblr.TumblrExtras.Filter#RAW} – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
      *                       <i>Default null - HTML</i>
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogPostQueue(@NonNull Context context, BlogQueueReceiver resultReceiver, String hostname, int limit, int offset, @Nullable @TumblrExtras.PostType String filter) {
         Intent intent = getBaseIntent(context, resultReceiver, ACTION_BLOG_QUEUED);
@@ -1802,7 +1802,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                       {@link com.sun40.robotumblr.TumblrExtras.Filter#TEXT} – Plain text, no HTML
      *                       {@link com.sun40.robotumblr.TumblrExtras.Filter#RAW} – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
      *                       <i>Default null - HTML</i>
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent blogDrafts(@NonNull Context context, BlogDraftReceiver resultReceiver, String hostname, int limit, long beforeId, String filter) {
         Intent intent = getBaseIntent(context, resultReceiver, ACTION_BLOG_DRAFT);
@@ -1821,7 +1821,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param resultReceiver receiver to get response data
      * @param hostname       users own hostname like temp.tumblr.com
      * @param creator        creator object witch contains post params
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent newPost(@NonNull Context context, BlogNewPostReceiver resultReceiver, @NonNull String hostname, @NonNull PostCreator creator) {
         if (!creator.valid())
@@ -1840,7 +1840,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param resultReceiver receiver to get response data
      * @param hostname       users own hostname like temp.tumblr.com
      * @param creator        creator object witch contains post params
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent editPost(@NonNull Context context, BlogNewPostReceiver resultReceiver, @NonNull String hostname, @NonNull PostCreator creator) {
         if (!creator.valid())
@@ -1859,7 +1859,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param resultReceiver receiver to get response data
      * @param hostname       user blog hostname like temp.tumblr.com
      * @param creator        creator object witch contains post params
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent reblogPost(@NonNull Context context, BlogReblogReceiver resultReceiver, @NonNull String hostname, @NonNull ReblogPostCreator creator) {
         if (!creator.valid())
@@ -1879,7 +1879,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param hostname       user blog hostname like temp.tumblr.com
      * @param post           post for reblogging
      * @param comment        comment on reblogged post
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent reblogPost(@NonNull Context context, BlogReblogReceiver resultReceiver, @NonNull String hostname, Post post, @Nullable String comment) {
         //noinspection ResourceType
@@ -1896,7 +1896,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param resultReceiver receiver to get response data
      * @param hostname       users own hostname like temp.tumblr.com
      * @param id             post id to remove
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent deletePost(@NonNull Context context, BlogPostDeleteReceiver resultReceiver, @NonNull String hostname, long id) {
         Intent intent = getBaseIntent(context, resultReceiver, ACTION_BLOG_DELETE_POST);
@@ -1911,7 +1911,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *
      * @param context  package context
      * @param receiver receiver to get response data
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userInfo(@NonNull Context context, UserInfoReceiver receiver) {
         return getBaseIntent(context, receiver, ACTION_USER_INFO);
@@ -1938,7 +1938,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                   Use this parameter to page through the results: first get a set of posts, and then get posts since the last ID of the previous set.
      * @param reblogInfo Indicates whether to return reblog information (specify true or false). Returns the various reblogged_ fields.
      * @param notesInfo  Indicates whether to return notes information (specify true or false). Returns note count and note metadata.
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userDashbloard(@NonNull Context context, @NonNull UserDashboardReceiver receiver, int limit, int offset, @TumblrExtras.PostType String type, long sinceId, boolean reblogInfo, boolean notesInfo) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_DASHBOARD);
@@ -1968,7 +1968,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                 {@link com.sun40.robotumblr.TumblrExtras.Post#AUDIO}
      *                 {@link com.sun40.robotumblr.TumblrExtras.Post#VIDEO}
      *                 {@link com.sun40.robotumblr.TumblrExtras.Post#ANSWER}
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userDashbloard(@NonNull Context context, @NonNull UserDashboardReceiver receiver, int limit, int offset, @Nullable @TumblrExtras.PostType String type) {
         return userDashbloard(context, receiver, limit, offset, type, -1, false, false);
@@ -1992,7 +1992,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      *                 {@link com.sun40.robotumblr.TumblrExtras.Post#ANSWER}
      * @param sinceId  Return posts that have appeared after this ID
      *                 Use this parameter to page through the results: first get a set of posts, and then get posts since the last ID of the previous set.
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userDashbloard(@NonNull Context context, @NonNull UserDashboardReceiver receiver, int limit, @Nullable @TumblrExtras.PostType String type, long sinceId) {
         return userDashbloard(context, receiver, limit, -1, type, sinceId, false, false);
@@ -2008,7 +2008,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param offset   Liked post number to start at
      * @param before   Retrieve posts liked before the specified timestamp
      * @param after    Retrieve posts liked after the specified timestamp
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
@@ -2030,7 +2030,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param context  package context
      * @param receiver receiver to get response data
      * @param limit    The number of results to return: 1–20, inclusive
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
@@ -2051,7 +2051,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver receiver to get response data
      * @param limit    The number of results to return: 1–20, inclusive
      * @param before   Retrieve posts liked before the specified timestamp
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
@@ -2072,7 +2072,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver receiver to get response data
      * @param limit    The number of results to return: 1–20, inclusive
      * @param after    Retrieve posts liked after the specified timestamp
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      * <p>
      * <li>You can only provide either before, after, or offset. If you provide more than one of these options together you will get an error.
      * <li>You can still use limit with any of those three options to limit your result set.
@@ -2093,7 +2093,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver receiver to get response data
      * @param limit    The number of results to return: 1–20, inclusive
      * @param offset   Result number to start at
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userFollowingBlogs(@NonNull Context context, @NonNull UserFollowingBlogsReceiver receiver, int limit, int offset) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_FOLLOWING_BLOGS);
@@ -2109,7 +2109,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param context  package context
      * @param receiver receiver to get response data
      * @param url      The URL of the blog to follow
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userFollowBlog(@NonNull Context context, @NonNull UserBlogFollowReceiver receiver, @NonNull String url) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_BLOG_FOLLOW);
@@ -2125,7 +2125,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param context  package context
      * @param receiver receiver to get response data
      * @param url      The URL of the blog to unfollow
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userUnfollowBlog(@NonNull Context context, @NonNull UserBlogFollowReceiver receiver, @NonNull String url) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_BLOG_FOLLOW);
@@ -2142,7 +2142,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver  receiver to get response data
      * @param id        The ID of the post to like
      * @param reblogKey The reblog key for the post id
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userLikePost(@NonNull Context context, @NonNull UserLikePostReceiver receiver, long id, @NonNull String reblogKey) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_POST_LIKE);
@@ -2160,7 +2160,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param receiver  receiver to get response data
      * @param id        The ID of the post to unlike
      * @param reblogKey The reblog key for the post id
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent userUnlikePost(@NonNull Context context, @NonNull UserLikePostReceiver receiver, long id, @NonNull String reblogKey) {
         Intent intent = getBaseIntent(context, receiver, ACTION_USER_POST_LIKE);
@@ -2183,7 +2183,7 @@ public class QueryService extends IntentService implements CountingTypedFile.Fil
      * @param filter   Specifies the post format to return, other than HTML:
      *                 <li>text – Plain text, no HTML
      *                 <li>raw – As entered by the user (no post-processing); if the user writes in Markdown, the Markdown will be returned rather than HTML
-     * @return Intent to start {@link QueryService}
+     * @return Intent to start {@link TumblrService}
      */
     public static Intent tagged(@NonNull Context context, @NonNull TaggedReceiver receiver, @NonNull String tag, long before, int limit, @Nullable @TumblrExtras.FilterType String filter) {
         Intent intent = getBaseIntent(context, receiver, ACTION_TAGGED);

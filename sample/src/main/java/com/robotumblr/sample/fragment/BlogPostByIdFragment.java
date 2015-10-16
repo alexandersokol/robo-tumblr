@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.receiver.BlogPostByIdReceiver;
@@ -56,7 +56,7 @@ public class BlogPostByIdFragment extends BaseFragment implements BlogPostsRecei
         mNotesInfoBox = (CheckBox) rootView.findViewById(R.id.notes_info_cb);
 
         SimpleDialog.show(false, false, false, getFragmentManager());
-        getActivity().startService(QueryService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
+        getActivity().startService(TumblrService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
         return rootView;
     }
 
@@ -96,7 +96,7 @@ public class BlogPostByIdFragment extends BaseFragment implements BlogPostsRecei
         }
 
         long id = mIdList.get(mIdSpinner.getSelectedItemPosition());
-        getActivity().startService(QueryService.blogPostById(getActivity(), mBlogPostByIdReceiver, getString(R.string.developers_hostname), id, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked()));
+        getActivity().startService(TumblrService.blogPostById(getActivity(), mBlogPostByIdReceiver, getString(R.string.developers_hostname), id, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked()));
         SimpleDialog.show(false, false, false, getFragmentManager());
     }
 

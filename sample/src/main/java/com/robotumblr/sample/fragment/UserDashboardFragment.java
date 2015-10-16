@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robotumblr.sample.R;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.receiver.UserDashboardReceiver;
@@ -119,7 +119,7 @@ public class UserDashboardFragment extends BaseFragment implements UserDashboard
         }
         String type = mTypeSpinner.getSelectedItemPosition() == 0 ? null : mPostTypes.get(mTypeSpinner.getSelectedItemPosition());
         //noinspection ResourceType
-        getActivity().startService(QueryService.userDashbloard(getActivity(), mUserDashboardReceiver, limit, offset, type, -1, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked()));
+        getActivity().startService(TumblrService.userDashbloard(getActivity(), mUserDashboardReceiver, limit, offset, type, -1, mReblogInfoBox.isChecked(), mNotesInfoBox.isChecked()));
         showDialog();
     }
 

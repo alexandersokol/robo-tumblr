@@ -13,11 +13,10 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Blog;
 import com.sun40.robotumblr.model.Post;
 import com.sun40.robotumblr.model.User;
-import com.sun40.robotumblr.model.posting.ReblogPostCreator;
 import com.sun40.robotumblr.receiver.BlogPostsReceiver;
 import com.sun40.robotumblr.receiver.BlogReblogReceiver;
 
@@ -83,7 +82,7 @@ public class PostReblogFragment extends BaseFragment implements BlogPostsReceive
 
         if (!mHostnames.isEmpty()) {
             mHostnameSpinner.setSelection(0);
-            getActivity().startService(QueryService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
+            getActivity().startService(TumblrService.blogPosts(getActivity(), mBlogPostsReceiver, getString(R.string.developers_hostname), 20, 0));
         } else {
             SimpleDialog.show(true, false, false, R.string.user_has_no_blogs, getFragmentManager());
         }
@@ -115,7 +114,7 @@ public class PostReblogFragment extends BaseFragment implements BlogPostsReceive
 
         Post post = mPosts.get(mPostSpinner.getSelectedItemPosition());
         String hostname = mHostnames.get(mHostnameSpinner.getSelectedItemPosition());
-        getActivity().startService(QueryService.reblogPost(getActivity(), mBlogReblogReceiver, hostname, post, mCommentEdit.getText().toString()));
+        getActivity().startService(TumblrService.reblogPost(getActivity(), mBlogReblogReceiver, hostname, post, mCommentEdit.getText().toString()));
         showDialog();
     }
 

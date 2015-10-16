@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.robotumblr.sample.R;
 import com.robotumblr.sample.dialog.SimpleDialog;
 import com.robotumblr.sample.util.StorageUtils;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.TumblrExtras;
 import com.sun40.robotumblr.model.User;
 import com.sun40.robotumblr.receiver.BlogAvatarReceiver;
@@ -128,7 +128,7 @@ public class BlogAvatarFragment extends BaseFragment implements BlogAvatarReceiv
             Toast.makeText(getContext(), "Enter Hostname", Toast.LENGTH_SHORT).show();
             return;
         }
-        getActivity().startService(QueryService.blogAvatar(getContext(), mBlogAvatarReceiver, hostname, size));
+        getActivity().startService(TumblrService.blogAvatar(getContext(), mBlogAvatarReceiver, hostname, size));
         mSizeView.setText("");
         mLinkView.setText("");
         SimpleDialog.show(false, false, false, getFragmentManager());

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.token.RequestToken;
 
 /**
@@ -30,13 +30,13 @@ public class RequestTokenReceiver extends BaseResultReceiver<RequestTokenReceive
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onRequestTokenFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        RequestToken requestToken = data.getParcelable(QueryService.KEY_TOKEN);
+        RequestToken requestToken = data.getParcelable(TumblrService.KEY_TOKEN);
         getListener().onRequestTokenSuccess(requestToken);
     }
 

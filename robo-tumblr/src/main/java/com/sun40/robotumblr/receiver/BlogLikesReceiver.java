@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.sun40.robotumblr.OnTokenInvalidatedListener;
-import com.sun40.robotumblr.QueryService;
+import com.sun40.robotumblr.TumblrService;
 import com.sun40.robotumblr.model.Post;
 
 import java.util.List;
@@ -31,22 +31,22 @@ public class BlogLikesReceiver extends BaseResultReceiver<BlogLikesReceiver.Blog
 
     @Override
     protected void onError(Bundle data) {
-        String error = data.isEmpty() ? null : data.getString(QueryService.KEY_ERROR);
+        String error = data.isEmpty() ? null : data.getString(TumblrService.KEY_ERROR);
         getListener().onBlogLikesFail(error);
     }
 
     @Override
     protected void onFinish(Bundle data) {
-        List<Post> posts = data.getParcelableArrayList(QueryService.KEY_POSTS);
+        List<Post> posts = data.getParcelableArrayList(TumblrService.KEY_POSTS);
         if (posts == null) {
             getListener().onBlogLikesFail(null);
             return;
         }
 
-        int likedCount = data.getInt(QueryService.KEY_LIKED_COUNT);
-        int limit = data.getInt(QueryService.KEY_LIMIT);
-        int offset = data.getInt(QueryService.KEY_OFFSET);
-        long timestamp = data.getLong(QueryService.KEY_TIMESTAMP);
+        int likedCount = data.getInt(TumblrService.KEY_LIKED_COUNT);
+        int limit = data.getInt(TumblrService.KEY_LIMIT);
+        int offset = data.getInt(TumblrService.KEY_OFFSET);
+        long timestamp = data.getLong(TumblrService.KEY_TIMESTAMP);
 
         getListener().onBlogLikesSuccess(posts, likedCount, limit, offset, timestamp);
     }
